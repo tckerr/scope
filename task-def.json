@@ -1,0 +1,18 @@
+{
+	"family": "gs-task-def",
+	"containerDefinitions": [{
+		"entryPoint": [],
+		"portMappings": [{
+			"hostPort": 80,
+			"protocol": "tcp",
+			"containerPort": 80
+		}],
+		"command": [],
+		"cpu": 10,
+		"environment": [],
+		"memory": 300,
+		"volumesFrom": [],
+		"image": "tckerr/python-gs",
+		"name": "python-gs"
+	}]
+}
