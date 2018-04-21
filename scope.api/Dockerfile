@@ -35,7 +35,7 @@ RUN apt-get update && \
 # install packages needed for mysql drivers
 RUN apt-get update
 RUN apt-get install -y libmysqlclient-dev
-RUN pwd
+RUN apt-get install -y libmysqlclient-dev
 
 # install uwsgi now because it takes a little while
 RUN pip3 install uwsgi
