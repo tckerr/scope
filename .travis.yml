@@ -2,9 +2,17 @@ language: python
 
 python:
     - "3.4"
+    
+services:
+  - mysql
 
 env:
   - DJANGO=1.11.1
+  - SCOPE_DB_HOST=127.0.0.1
+  - SCOPE_DB_USER=root
+  - SCOPE_DB_PASS=
+  - SCOPE_DB_PORT=3306
+  - SCOPE_SECRET_KEY=key
     
 before_install:
   - export DJANGO_SETTINGS_MODULE=settings
@@ -13,7 +21,6 @@ before_install:
   
 install:
   - pip install -r scope.api/app/requirements.txt
-  - pip install django==$DJANGO
   
 script:
     - cd scope.api/app
