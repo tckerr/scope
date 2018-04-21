@@ -1,0 +1,5 @@
+&"$($PSScriptRoot)/start_machine.ps1"
+&"$($PSScriptRoot)/build_docker_image.ps1"
+&"$($PSScriptRoot)/run_latest.ps1"
+&"$($PSScriptRoot)/push_latest_image.ps1"
+&"$($PSScriptRoot)/deploy_to_aws.ps1"

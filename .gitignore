@@ -1,6 +1,8 @@
 # Created by https://www.gitignore.io
 
 scope.api/.venv
+creds.txt
+*.env
 
 ### OSX ###
 .DS_Store

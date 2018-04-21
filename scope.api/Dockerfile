@@ -19,7 +19,7 @@ MAINTAINER Dockerfiles
 # Install required packages and remove the apt packages cache when done.
 
 RUN apt-get update && \
-    apt-get upgrade -y && \ 	
+    apt-get upgrade -y && \
     apt-get install -y \
 	git \
 	python3 \
@@ -31,6 +31,9 @@ RUN apt-get update && \
 	sqlite3 && \
 	pip3 install -U pip setuptools && \
    rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update
+RUN apt-get install -y libmysqlclient-dev
 
 # install uwsgi now because it takes a little while
 RUN pip3 install uwsgi
