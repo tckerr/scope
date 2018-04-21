@@ -3,6 +3,7 @@
 scope.api/.venv
 creds.txt
 *.env
+scripts/set_env_variables.ps1
 
 ### OSX ###
 .DS_Store
