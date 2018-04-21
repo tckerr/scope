@@ -1,2 +1,2 @@
 # scope
-Full Docker/AWS/CLI application example
+Example Django application using Docker, AWS, and more.
