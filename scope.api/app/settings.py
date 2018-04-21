@@ -30,7 +30,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'scope_api.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATES = [
     {
@@ -48,7 +48,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'scope_api.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 SCOPE_DB_HOST = os.environ.get('SCOPE_DB_HOST')
 SCOPE_DB_PORT = os.environ.get('SCOPE_DB_PORT')
@@ -87,7 +87,7 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'app/static')
 
 LOGGING = {
     'version':                  1,
