@@ -1,0 +1,1 @@
+docker build -t python-gs scope.api
