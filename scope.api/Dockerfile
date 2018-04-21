@@ -32,8 +32,10 @@ RUN apt-get update && \
 	pip3 install -U pip setuptools && \
    rm -rf /var/lib/apt/lists/*
 
+# install packages needed for mysql drivers
 RUN apt-get update
 RUN apt-get install -y libmysqlclient-dev
+RUN pwd
 
 # install uwsgi now because it takes a little while
 RUN pip3 install uwsgi
@@ -52,9 +54,9 @@ RUN pip3 install -r /home/docker/code/app/requirements.txt
 # add (the rest of) our code
 COPY . /home/docker/code/
 
-# install django, normally you would remove this step because your project would already
-# be installed in the code/app/ directory
-# RUN django-admin.py startproject website /home/docker/code/app/
+#RUN cd /home/docker/code/app/ && \
+#    python3 manage.py migrate && \
+#    cd /
 
 EXPOSE 80
 CMD ["supervisord", "-n"]
