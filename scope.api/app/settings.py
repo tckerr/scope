@@ -107,3 +107,6 @@ LOGGING = {
         },
     },
 }
+
+with open(BASE_DIR + "/app/version.txt", encoding="utf-16") as file:
+    APP_VERSION_NUMBER = str(file.readline()).replace("\n", "")
