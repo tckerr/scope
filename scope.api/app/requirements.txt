@@ -6,3 +6,4 @@ django-filter
 coreapi
 pygments
 markdown
+raven

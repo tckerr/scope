@@ -17,6 +17,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'raven.contrib.django.raven_compat',
     'diagnostics',
 ]
 
@@ -108,5 +109,11 @@ LOGGING = {
     },
 }
 
-with open(BASE_DIR + "/app/version.txt", encoding="utf-16") as file:
-    APP_VERSION_NUMBER = str(file.readline()).replace("\n", "")
+with open(BASE_DIR + '/app/version.txt', encoding='utf-16') as file:
+    APP_VERSION_NUMBER = str(file.readline()).replace('\n', '')
+
+import raven
+RAVEN_CONFIG = {
+    'dsn': os.environ.get('SENTRY_DSN'),
+    'release': APP_VERSION_NUMBER,
+}
