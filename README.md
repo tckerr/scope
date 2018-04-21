@@ -21,4 +21,4 @@ Please keep in mind that Scope is a work in progress. You can see an early build
 - **Container Software**: [Docker](https://www.docker.com/)
 - **Production container orchestration**: [Amazon ECS](https://aws.amazon.com/ecs/)
 - **Database**: [MySQL](https://www.mysql.com/) on [Azure Cloud](https://azure.microsoft.com/en-us/)
-- **Central logging**: [Sentry](https://sentry.io)
+- **Log aggregation**: [Sentry](https://sentry.io)
