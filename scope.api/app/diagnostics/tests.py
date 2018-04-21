@@ -7,11 +7,3 @@ class PassingTestCase(TestCase):
 
     def test_will_always_pass(self):
         self.assertTrue(True)
-
-
-class FailingTestCase(TestCase):
-    def setUp(self):
-        pass
-
-    def test_will_always_fail(self):
-        self.assertTrue(False)
