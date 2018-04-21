@@ -6,6 +6,7 @@ creds.txt
 scripts/set_env_variables.ps1
 scripts/set_env_variables_prod.ps1
 scope.api/.idea
+.idea
 
 ### OSX ###
 .DS_Store
