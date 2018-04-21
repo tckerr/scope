@@ -7,11 +7,13 @@ env:
   - DJANGO=1.11.1
     
 before_install:
-  - export DJANGO_SETTINGS_MODULE=scope.api.app.settings
+  - export DJANGO_SETTINGS_MODULE=settings
   - export PYTHONPATH=$HOME/builds/tckerr/scope
   - export PIP_USE_MIRRORS=true
   
 install:
-  - pip install .
   - pip install -r scope.api/app/requirements.txt
   - pip install django==$DJANGO --quiet
+  
+script:
+    - cd scope.api/app
