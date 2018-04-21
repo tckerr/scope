@@ -53,9 +53,5 @@ RUN pip3 install -r /home/docker/code/app/requirements.txt
 # add (the rest of) our code
 COPY . /home/docker/code/
 
-#RUN cd /home/docker/code/app/ && \
-#    python3 manage.py migrate && \
-#    cd /
-
 EXPOSE 80
 CMD ["supervisord", "-n"]

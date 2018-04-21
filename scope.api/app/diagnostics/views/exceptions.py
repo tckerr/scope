@@ -1,7 +1,8 @@
 from rest_framework.views import APIView
 
 
-class ForceErrorApiView(APIView):
+class ExceptionsApiView(APIView):
 
     def post(self, request, format=None):
+        """Force an exception."""
         raise Exception("Don't panic! This exception was thrown by the 'Force error' API.")

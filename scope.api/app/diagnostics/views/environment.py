@@ -9,6 +9,7 @@ class EnvironmentVariableApiView(APIView):
     authentication_classes = (authentication.TokenAuthentication, authentication.BasicAuthentication)
     permission_classes = (permissions.IsAdminUser,)
 
-    def get(self, request, format=None, env_var=''):
-        env_var = os.environ.get(env_var, 'Environment variable \"{}\" not defined'.format(env_var))
+    def get(self, request, format=None, environmentVariable=''):
+        """Return an environment variable. Admins only."""
+        env_var = os.environ.get(environmentVariable, 'Environment variable \"{}\" not defined'.format(environmentVariable))
         return Response(env_var)
