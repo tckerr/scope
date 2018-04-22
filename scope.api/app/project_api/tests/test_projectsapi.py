@@ -207,3 +207,16 @@ class ProjectsAPITestCase(APITestCase):
         url = reverse(self.projects_detail_name, kwargs={'pk': self.casterlyrock.id})
         response = self.client.put(url, {})
         self.assertEquals(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test__delete_project__returns_404_when_project_unknown(self):
+        self.client.login(username="bran", password='1')
+        url = reverse(self.projects_detail_name, kwargs={'pk': self.casterlyrock.id})
+        response = self.client.delete(url)
+        self.assertEquals(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test__delete_project__deletes_project(self):
+        self.client.login(username="bran", password='1')
+        url = reverse(self.projects_detail_name, kwargs={'pk': self.winterfell.id})
+        response = self.client.delete(url)
+        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEquals(Project.objects.filter(pk=self.winterfell.id).count(), 0)
