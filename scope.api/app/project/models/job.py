@@ -8,7 +8,8 @@ class Job(models.Model):
     name = models.CharField(max_length=128)
     workstream = models.ForeignKey(Workstream, related_name='jobs', on_delete=models.CASCADE)
     status = models.ForeignKey(JobStatus, related_name='jobs', on_delete=models.CASCADE)
-    created = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if self.status.organization is not self.workstream.project.organization:

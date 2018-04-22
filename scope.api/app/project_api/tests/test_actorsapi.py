@@ -104,28 +104,45 @@ class ActorsAPITestCase(APITestCase):
             }
         ])
 
-    def test__list_actors__returns_404_when_user_unknown(self):
+    def test__get_actor__returns_actor(self):
+        self.client.login(username="bran", password='1')
+        url = reverse('actors-detail', kwargs={'pk': self.sansa_actor.id})
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
+        self.assertEquals(response.data, {
+            'id':            self.sansa_actor.id,
+            'name':          self.sansa_actor.name,
+            'organizations': [self.starks.id]
+        })
+
+    def test__get_actor__returns_404_when_user_unknown(self):
         self.client.login(username="bran", password='1')
         url = reverse('actors-detail', kwargs={'pk': self.jamie_actor.id})
         response = self.client.get(url)
         self.assertEquals(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test__actor_create__returns_405_not_allowed(self):
+    def test__create_actor__returns_405_not_allowed(self):
         self.client.login(username="bran", password='1')
         url = reverse('actors-list')
         response = self.client.post(url, {})
         self.assertEquals(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
-    def test__actor_patch__returns_405_not_allowed(self):
+    def test__patch_actor__returns_405_not_allowed(self):
         self.client.login(username="bran", password='1')
         url = reverse('actors-detail', kwargs={'pk': self.bran_actor.id})
         response = self.client.patch(url, {})
         self.assertEquals(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
-    def test__actor_put__returns_405_not_allowed(self):
+    def test__put_actor__returns_405_not_allowed(self):
         self.client.login(username="bran", password='1')
         url = reverse('actors-detail', kwargs={'pk': self.bran_actor.id})
         response = self.client.put(url, {})
+        self.assertEquals(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test__delete_actor__returns_405_not_allowed(self):
+        self.client.login(username="bran", password='1')
+        url = reverse('actors-detail', kwargs={'pk': self.bran_actor.id})
+        response = self.client.delete(url)
         self.assertEquals(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
     # TODO: known bug with django filter-fields (since they have to be model only?)

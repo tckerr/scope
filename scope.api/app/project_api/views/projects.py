@@ -9,6 +9,14 @@ class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = ('id', 'name', 'created', 'organization')
+        read_only_fields = ('id', 'created',)
+
+
+class ProjectUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ('id', 'name', 'created', 'organization')
+        read_only_fields = ('id', 'organization', 'created',)
 
 
 class ProjectsViewSet(viewsets.ModelViewSet):
@@ -17,10 +25,16 @@ class ProjectsViewSet(viewsets.ModelViewSet):
     filter_backends = (DjangoFilterBackend,)
     filter_fields = ('name', 'organization', 'created')
 
+    def get_serializer_class(self):
+        serializer_class = self.serializer_class
+        if self.request.method == 'PATCH' or self.request.method == 'PUT':
+            serializer_class = ProjectUpdateSerializer
+        return serializer_class
+
     @staticmethod
     def org_is_editable(request):
-        org_id = request.data['organization']
-        org_editable = Organization.objects.filter(pk=org_id, actors__user_id=request.user.id)
+        org_id = request.data.get('organization', None)
+        org_editable = not org_id or Organization.objects.filter(pk=org_id, actors__user_id=request.user.id)
         return org_editable
 
     def create(self, request, *args, **kwargs):

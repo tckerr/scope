@@ -59,7 +59,7 @@ class OrganizationsAPITestCase(APITestCase):
             }
         ])
 
-    def test__read_organization__returns_org_if_usr_belongs(self):
+    def test__get_organization__returns_org_if_user_belongs(self):
         url = reverse('organizations-detail', kwargs={'pk': self.organization1.id})
         response = self.client.get(url)
         self.assertEquals(response.status_code, status.HTTP_200_OK)
@@ -68,7 +68,64 @@ class OrganizationsAPITestCase(APITestCase):
             'name': self.organization1.name
         })
 
-    def test__read_organization__returns_404_if_user_doesnt_belong(self):
+    def test__get_organization__returns_404_if_user_doesnt_belong(self):
         url = reverse('organizations-detail', kwargs={'pk': self.organization3.id})
         response = self.client.get(url)
+        self.assertEquals(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test__create_organization__creates_organization(self):
+        url = reverse('organizations-list')
+        response = self.client.post(url, {
+            'name': 'new org'
+        })
+        self.assertEquals(response.status_code, status.HTTP_201_CREATED)
+        self.assertEquals(response.data['name'], 'new org')
+
+    def test__patch_organization__updates_name(self):
+        url = reverse('organizations-detail', kwargs={'pk': self.organization1.id})
+        response = self.client.patch(url, {
+            'name': 'name1'
+        })
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
+        self.assertEquals(response.data, {
+            'name': 'name1',
+            'id': self.organization1.id
+        })
+
+    def test__patch_organization__returns_404_if_user_doesnt_belong(self):
+        url = reverse('organizations-detail', kwargs={'pk': self.organization3.id})
+        response = self.client.patch(url, {
+            'name': 'name1'
+        })
+        self.assertEquals(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test__put_organization__updates_name(self):
+        url = reverse('organizations-detail', kwargs={'pk': self.organization1.id})
+        response = self.client.put(url, {
+            'name': 'name1'
+        })
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
+        self.assertEquals(response.data, {
+            'name': 'name1',
+            'id': self.organization1.id
+        })
+
+    def test__put_organization__returns_404_if_user_doesnt_belong(self):
+        url = reverse('organizations-detail', kwargs={'pk': self.organization3.id})
+        response = self.client.put(url, {
+            'name': 'name1'
+        })
+        self.assertEquals(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test__delete_organization__deletes_org(self):
+        url = reverse('organizations-detail', kwargs={'pk': self.organization1.id})
+        response = self.client.delete(url)
+        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEquals(Organization.objects.filter(pk=self.organization1.id).count(), 0)
+
+    def test__delete_organization__returns_404_if_user_doesnt_belong(self):
+        url = reverse('organizations-detail', kwargs={'pk': self.organization3.id})
+        response = self.client.delete(url, {
+            'name': 'name1'
+        })
         self.assertEquals(response.status_code, status.HTTP_404_NOT_FOUND)

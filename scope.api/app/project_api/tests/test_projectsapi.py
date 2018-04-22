@@ -100,7 +100,7 @@ class ProjectsAPITestCase(APITestCase):
             }
         ])
 
-    def test__projects_detail__returns_project(self):
+    def test__get_project__returns_project(self):
         self.client.login(username="bran", password='1')
         url = reverse(self.projects_detail_name, kwargs={'pk': self.winterfell.id})
         response = self.client.get(url)
@@ -112,13 +112,13 @@ class ProjectsAPITestCase(APITestCase):
             'created':      format_iso8601(self.winterfell.created)
         })
 
-    def test__projects_detail__returns_404_when_project_unknown(self):
+    def test__get_project__returns_404_when_project_unknown(self):
         self.client.login(username="bran", password='1')
         url = reverse(self.projects_detail_name, kwargs={'pk': self.casterlyrock.id})
         response = self.client.get(url)
         self.assertEquals(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test__projects_create__returns_project(self):
+    def test__create_project__returns_project(self):
         self.client.login(username="bran", password='1')
         url = reverse(self.projects_list_name)
         name = 'greywater'
@@ -131,7 +131,7 @@ class ProjectsAPITestCase(APITestCase):
         self.assertEquals(response.data['name'], name)
         self.assertEquals(response.data['organization'], self.starks.id)
 
-    def test__projects_create__forbids_adding_to_other_org(self):
+    def test__create_project__forbids_adding_to_other_org(self):
         self.client.login(username="bran", password='1')
         url = reverse(self.projects_list_name)
         name = 'greywater'
@@ -142,16 +142,56 @@ class ProjectsAPITestCase(APITestCase):
         response = self.client.post(url, post_data)
         self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test__projects_update__forbids_adding_to_other_org(self):
+    def test__patch_project__updates_name(self):
+        self.client.login(username="bran", password='1')
+        url = reverse(self.projects_detail_name, kwargs={'pk': self.winterfell.id})
+        response = self.client.patch(url, {'name': 'greywater'})
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
+        self.assertEquals(response.data, {
+            'id':           self.winterfell.id,
+            'name':         'greywater',
+            'organization': self.starks.id,
+            'created':      format_iso8601(self.winterfell.created)
+        })
+
+    def test__patch_project__doesnt_allow_updates_to_org(self):
+        self.client.login(username="sansa", password='1')
+        url = reverse(self.projects_detail_name, kwargs={'pk': self.winterfell.id})
+        response = self.client.patch(url, {'organization': self.lannisters.id})
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
+        self.assertEquals(Project.objects.get(name=self.winterfell.name).organization.id, self.starks.id)
+
+    def test__patch_project__forbids_adding_to_other_org(self):
+        self.client.login(username="bran", password='1')
+        url = reverse(self.projects_detail_name, kwargs={'pk': self.winterfell.id})
+        response = self.client.patch(url, {
+            'organization': self.lannisters.id,
+            'name': 'new name'
+        })
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test__patch_project__returns_404_when_project_unknown(self):
+        self.client.login(username="bran", password='1')
+        url = reverse(self.projects_detail_name, kwargs={'pk': self.casterlyrock.id})
+        response = self.client.patch(url, {})
+        self.assertEquals(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test__put_project__updates_name(self):
         self.client.login(username="bran", password='1')
         url = reverse(self.projects_detail_name, kwargs={'pk': self.winterfell.id})
         data = {
-            'organization': self.lannisters.id
+            'name': 'greywater'
         }
-        response = self.client.patch(url, data)
-        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        response = self.client.put(url, data)
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
+        self.assertEquals(response.data, {
+            'id':           self.winterfell.id,
+            'name':         'greywater',
+            'organization': self.starks.id,
+            'created':      format_iso8601(self.winterfell.created)
+        })
 
-    def test__projects_put__forbids_adding_to_other_org(self):
+    def test__put_project__forbids_adding_to_other_org(self):
         self.client.login(username="bran", password='1')
         url = reverse(self.projects_detail_name, kwargs={'pk': self.winterfell.id})
         data = {
@@ -160,3 +200,10 @@ class ProjectsAPITestCase(APITestCase):
         }
         response = self.client.put(url, data)
         self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEquals(Project.objects.get(name=self.winterfell.name).organization.id, self.starks.id)
+
+    def test__put_project__returns_404_when_project_unknown(self):
+        self.client.login(username="bran", password='1')
+        url = reverse(self.projects_detail_name, kwargs={'pk': self.casterlyrock.id})
+        response = self.client.put(url, {})
+        self.assertEquals(response.status_code, status.HTTP_404_NOT_FOUND)
