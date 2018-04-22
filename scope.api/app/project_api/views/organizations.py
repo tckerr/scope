@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import serializers, viewsets
 from rest_framework.permissions import IsAuthenticated
 
@@ -21,6 +22,8 @@ class OrganizationSerializer(serializers.ModelSerializer):
 class OrganizationsViewSet(viewsets.ModelViewSet):
     serializer_class = OrganizationSerializer
     permission_classes = [IsAuthenticated]
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('name',)
 
     def get_queryset(self):
         return Organization \

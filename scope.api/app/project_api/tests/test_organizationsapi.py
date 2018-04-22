@@ -48,6 +48,17 @@ class OrganizationsAPITestCase(APITestCase):
             }
         ])
 
+    def test_listOrganizations_returnsFiltered(self):
+        url = reverse('organizations-list') + '?name=tk2'
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
+        self.assertEquals(response.data, [
+            {
+                'id':   self.organization2.id,
+                'name': self.organization2.name
+            }
+        ])
+
     def test_readOrganization_returnsOrgIfUserIsPartOfIt(self):
         url = reverse('organizations-detail', kwargs={'pk': self.organization1.id})
         response = self.client.get(url)
