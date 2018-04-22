@@ -6,7 +6,7 @@ from rest_framework.test import APITestCase
 from project.models import Membership, Organization, Actor
 
 
-class OrganizationsViewTestCase(APITestCase):
+class OrganizationsAPITestCase(APITestCase):
 
     def setUp(self):
         self.user = self.create_user()
@@ -49,7 +49,7 @@ class OrganizationsViewTestCase(APITestCase):
         ])
 
     def test_readOrganization_returnsOrgIfUserIsPartOfIt(self):
-        url = reverse('organizations-read', kwargs={'organization_id': self.organization1.id})
+        url = reverse('organizations-detail', kwargs={'pk': self.organization1.id})
         response = self.client.get(url)
         self.assertEquals(response.status_code, status.HTTP_200_OK)
         self.assertEquals(response.data, {
@@ -58,6 +58,6 @@ class OrganizationsViewTestCase(APITestCase):
         })
 
     def test_readOrganization_doesNoteReturnOrgIfUserIsNotPartOfIt(self):
-        url = reverse('organizations-read', kwargs={'organization_id': self.organization3.id})
+        url = reverse('organizations-detail', kwargs={'pk': self.organization3.id})
         response = self.client.get(url)
         self.assertEquals(response.status_code, status.HTTP_404_NOT_FOUND)

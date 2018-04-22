@@ -1,8 +1,7 @@
-from django.conf.urls import url
+from rest_framework.routers import DefaultRouter
 
-from project_api.views.organizations import ReadOrganizationView, ListOrganizationsView
+from project_api.views.organizations import OrganizationsViewSet
 
-urlpatterns = [
-    url(r'^organizations/(?P<organization_id>[0-9]+)$', ReadOrganizationView.as_view(), name='organizations-read'),
-    url('organizations/', ListOrganizationsView.as_view(), name='organizations-list'),
-]
+router = DefaultRouter()
+router.register(r'organizations', OrganizationsViewSet, base_name='organizations')
+urlpatterns = router.urls

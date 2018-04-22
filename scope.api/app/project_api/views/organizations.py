@@ -1,8 +1,7 @@
-from rest_framework import serializers, authentication, permissions, status
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework import serializers, viewsets
+from rest_framework.permissions import IsAuthenticated
 
-from project.models import Organization
+from project.models import Organization, Actor, Membership
 
 
 class OrganizationSerializer(serializers.ModelSerializer):
@@ -11,40 +10,20 @@ class OrganizationSerializer(serializers.ModelSerializer):
         fields = ('id', 'name',)
 
 
-class ListOrganizationsView(APIView):
-    authentication_classes = (
-        authentication.TokenAuthentication,
-        authentication.BasicAuthentication,
-        authentication.SessionAuthentication)
-    permission_classes = (permissions.IsAuthenticated,)
+    def create(self, validated_data):
+        org = super().create(validated_data)
+        user = self.context['request'].user
+        actor = Actor.objects.get(user_id=user.id)
+        Membership(actor=actor, organization=org).save()
+        return org
 
-    def get(self, request, format=None):
-        """Retrieve a list of all organizations."""
-        organizations = Organization \
+
+class OrganizationsViewSet(viewsets.ModelViewSet):
+    serializer_class = OrganizationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Organization \
             .objects \
-            .filter(actors__user_id=request.user.id) \
-            .order_by('id') \
-            .all()
-        serializer = OrganizationSerializer(organizations, many=True)
-        return Response(serializer.data)
-
-
-class ReadOrganizationView(APIView):
-    authentication_classes = (
-        authentication.TokenAuthentication,
-        authentication.BasicAuthentication,
-        authentication.SessionAuthentication)
-    permission_classes = (permissions.IsAuthenticated,)
-
-    def get(self, request, organization_id, format=None):
-        """Retrieve an organization."""
-        if organization_id is None:
-            raise Exception()
-        organizations = Organization \
-            .objects \
-            .filter(actors__user_id=request.user.id, id=organization_id) \
+            .filter(actors__user_id=self.request.user.id) \
             .order_by('id')
-        if organizations:
-            serializer = OrganizationSerializer(organizations.first(), many=False)
-            return Response(serializer.data)
-        return Response(status=status.HTTP_404_NOT_FOUND)
