@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~spacing/main.css";
+
+body {
+  margin: 0;
+}
+
+.container {
+  display: flex;
+}
+
+.center-items {
+  justify-content: center;
+
+}
+
+.container-row {
+  flex-direction: row;
+}
+
+.container-menu {
+  flex-direction: column;
+  max-width: 800px;
+}
