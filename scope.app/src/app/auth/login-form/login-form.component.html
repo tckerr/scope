@@ -1,0 +1,29 @@
+<div class="mat-elevation-z2 pt4 pr4 pl4 pb3">
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="container container-menu">
+        <mat-form-field>
+            <input matInput
+                   type="text"
+                   name="username"
+                   placeholder="username"
+                   required
+                   [(ngModel)]="username"
+                   [disabled]="submitting"/>
+            <mat-error *ngFor="let error of usernameErrors">error: {{error}}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="mb2">
+            <input matInput
+                   type="password"
+                   name="password"
+                   placeholder="password"
+                   required
+                   [(ngModel)]="password"
+                   [disabled]="submitting"/>
+            <mat-error *ngFor="let error of passwordErrors">error: {{error}}</mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary" [disabled]="submitting">Login</button>
+        <mat-progress-bar *ngIf="submitting" class="mt1" mode="indeterminate"></mat-progress-bar>
+        <p color='accent' *ngFor="let message of generalErrors" class="mat-body-2 mat-background-warn text-center">
+            {{message}}
+        </p>
+    </form>
+</div>

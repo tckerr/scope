@@ -27,7 +27,7 @@ class ProjectsViewSet(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         serializer_class = self.serializer_class
-        if self.request.method == 'PATCH' or self.request.method == 'PUT':
+        if self.request and (self.request.method == 'PATCH' or self.request.method == 'PUT'):
             serializer_class = ProjectUpdateSerializer
         return serializer_class
 

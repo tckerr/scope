@@ -1,0 +1,89 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~spacing/main.css";
+@import "~font-awesome/css/font-awesome.min.css";
+
+body, html {
+    margin: 0;
+    height: 100%;
+}
+
+.color-success {
+    color: lightgreen;
+}
+
+.color-error {
+    color: indianred;
+}
+
+.color-unknown {
+    color: lightgray;
+}
+
+.container {
+    display: flex;
+}
+
+.center-items {
+    justify-content: center;
+}
+
+.vertical-align-items {
+    align-items: center;
+}
+
+.container-row {
+    flex-direction: row;
+}
+
+.container-col {
+    flex-direction: column;
+}
+
+.bg-white {
+    background-color: white;
+
+}
+
+.container-menu {
+    flex-direction: column;
+    max-width: 800px;
+    min-width: 300px;
+    min-height: 240px;
+}
+
+.flex-0 {
+    flex-grow: 0;
+}
+
+.flex-1 {
+    flex-grow: 1;
+}
+
+.flex-2 {
+    flex-grow: 2;
+}
+
+.flex-3 {
+    flex-grow: 3;
+}
+
+.space-fill {
+    flex: 1 1 auto;
+}
+
+.text-sm {
+    font-size: .8em;
+}
+
+.text-vsm {
+    font-size: .6em;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.bg-light-gray {
+    background-color: #fafafa;
+}

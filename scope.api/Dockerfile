@@ -52,6 +52,8 @@ RUN pip3 install -r /home/docker/code/app/requirements.txt
 
 # add (the rest of) our code
 COPY . /home/docker/code/
+RUN chown www-data:www-data /home/docker/code/app/static/dist
+RUN chmod -R 777 /home/docker/code/app/static/dist
 
 EXPOSE 80
 CMD ["supervisord", "-n"]
