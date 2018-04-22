@@ -5,6 +5,7 @@ creds.txt
 *.env
 scripts/set_env_variables.ps1
 scripts/set_env_variables_prod.ps1
+scripts/set_env_variables_local.ps1
 scope.api/.idea
 .idea
 scope.api/app/static

@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'raven.contrib.django.raven_compat',
     'diagnostics',
+    'project',
 ]
 
 MIDDLEWARE = [
