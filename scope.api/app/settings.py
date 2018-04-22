@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'raven.contrib.django.raven_compat',
     'diagnostics',
     'project',
+    'project_api',
 ]
 
 MIDDLEWARE = [
