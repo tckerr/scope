@@ -6,12 +6,13 @@ import 'rxjs/add/operator/map';
 import {Token} from '../models/token';
 import {Credentials} from '../models/credentials';
 import {HttpClient} from '@angular/common/http';
+import 'rxjs/add/operator/do';
 
 @Injectable()
 export class AuthService {
     private api: { baseUrl: string; auth: { tokenUrl: string } };
     private _tokenFetched: Subject<Token> = new Subject<Token>();
-    private tokenFetched$: Observable<Token>;
+    public tokenFetched$: Observable<Token>;
     private http: HttpClient;
     private _token: Token;
 
@@ -28,10 +29,10 @@ export class AuthService {
         return this._token;
     }
 
-    public fetchToken(credentials: Credentials) {
+    public fetchToken(credentials: Credentials): Observable<Token> {
         const url = this.api.baseUrl + this.api.auth.tokenUrl;
-        this.http.post<{ token: string }>(url, credentials)
+        return this.http.post<{ token: string }>(url, credentials)
             .map(response => new Token(response.token))
-            .subscribe(token => this._tokenFetched.next(token));
+            .do(token => this._tokenFetched.next(token));
     }
 }

@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {AuthService} from '../services/auth.service';
 import {Credentials} from '../models/credentials';
+import {Token} from '../models/token';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
     selector: 'app-login-form',
@@ -10,18 +12,43 @@ import {Credentials} from '../models/credentials';
 })
 export class LoginFormComponent implements OnInit {
     private authService: AuthService;
-    private username: string;
-    private password: string;
+    public username: string;
+    public password: string;
+    public generalErrors: string[] = [];
+    public passwordErrors: string[] = [];
+    public usernameErrors: string[] = [];
+    public submitting = false;
 
     constructor(authService: AuthService) {
         this.authService = authService;
     }
 
     public onSubmit(form: NgForm) {
+        this.submitting = true;
+        this.clearErrors();
         const credentials = new Credentials();
         credentials.username = this.username;
         credentials.password = this.password;
-        this.authService.fetchToken(credentials);
+        this.authService.fetchToken(credentials)
+            .subscribe(t => this.success(t), e => this.error(e));
+    }
+
+    private clearErrors() {
+        this.generalErrors = [];
+        this.passwordErrors = [];
+        this.usernameErrors = [];
+    }
+
+    private error(e: HttpErrorResponse) {
+        console.log(e);
+        this.passwordErrors = e.error.password || [];
+        this.usernameErrors = e.error.username || [];
+        this.generalErrors = e.error.non_field_errors || [];
+        return this.submitting = false;
+    }
+
+    private success(t: Token) {
+        return this.submitting = false;
     }
 
     ngOnInit() {
