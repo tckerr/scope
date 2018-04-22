@@ -7,3 +7,4 @@ coreapi
 pygments
 markdown
 raven
+django-cors-headers

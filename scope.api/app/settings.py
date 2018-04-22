@@ -10,6 +10,7 @@ ALLOWED_HOSTS = [
     "*"
 ]
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -17,8 +18,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'django_filters',
     'raven.contrib.django.raven_compat',
+    'authentication',
     'diagnostics',
     'project',
     'project_api',
@@ -27,6 +30,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -35,7 +39,14 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+    'DEFAULT_FILTER_BACKENDS':        (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    )
 }
 
 ROOT_URLCONF = 'urls'
@@ -120,7 +131,10 @@ with open(BASE_DIR + '/app/version.txt', encoding='utf-16') as file:
     APP_VERSION_NUMBER = str(file.readline()).replace('\n', '')
 
 import raven
+
 RAVEN_CONFIG = {
-    'dsn': os.environ.get('SENTRY_DSN'),
+    'dsn':     os.environ.get('SENTRY_DSN'),
     'release': APP_VERSION_NUMBER,
 }
+
+CORS_ORIGIN_ALLOW_ALL = True
