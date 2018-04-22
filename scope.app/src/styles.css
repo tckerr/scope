@@ -8,13 +8,15 @@ body, html {
     height: 100%;
 }
 
-.color-success{
+.color-success {
     color: lightgreen;
 }
-.color-error{
+
+.color-error {
     color: indianred;
 }
-.color-unknown{
+
+.color-unknown {
     color: lightgray;
 }
 
@@ -36,6 +38,11 @@ body, html {
 
 .container-col {
     flex-direction: column;
+}
+
+.bg-white {
+    background-color: white;
+
 }
 
 .container-menu {
@@ -73,6 +80,10 @@ body, html {
     font-size: .6em;
 }
 
-.text-center{
+.text-center {
     text-align: center;
+}
+
+.bg-light-gray {
+    background-color: #fafafa;
 }
