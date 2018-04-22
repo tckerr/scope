@@ -8,6 +8,16 @@ body, html {
     height: 100%;
 }
 
+.color-success{
+    color: lightgreen;
+}
+.color-error{
+    color: indianred;
+}
+.color-unknown{
+    color: lightgray;
+}
+
 .container {
     display: flex;
 }

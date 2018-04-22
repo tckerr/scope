@@ -7,7 +7,7 @@ import {
     MatInputModule, MatListModule,
     MatMenuModule, MatProgressBarModule,
     MatProgressSpinnerModule,
-    MatToolbarModule
+    MatToolbarModule, MatTooltipModule
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
@@ -27,6 +27,7 @@ const modules = [
     MatProgressBarModule,
     MatListModule,
     MatCardModule,
+    MatTooltipModule,
     HttpClientModule
 ];
 
