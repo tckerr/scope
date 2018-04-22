@@ -18,12 +18,12 @@ class MembershipTestCase(TestCase):
         self.actor.delete()
         self.organization.delete()
 
-    def test_actor_returns_actor(self):
+    def test__actor__returns_actor(self):
         self.assertEquals(self.membership.actor_id, self.actor.id)
         self.assertEquals(self.membership.actor.id, self.actor.id)
         self.assertEquals(self.organization.actors.get().id, self.actor.id)
 
-    def test_organization_returns_organization(self):
+    def test__organization__returns_organization(self):
         self.assertEquals(self.membership.organization_id, self.organization.id)
         self.assertEquals(self.membership.organization.id, self.organization.id)
         self.assertEquals(self.actor.organizations.get().id, self.organization.id)

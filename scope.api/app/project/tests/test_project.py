@@ -1,12 +1,17 @@
 from django.test import TestCase
 
-from project.models import Project
+from project.models import Project, Organization
 
 
 class ProjectTestCase(TestCase):
     def setUp(self):
-        pass
+        self.org = Organization()
+        self.org.save()
+        self.project = Project(organization=self.org)
+        self.project.save()
 
-    def test_project_class_exists(self):
-        actor = Project()
-        self.assertTrue(True)
+    def tearDown(self):
+        self.org.delete()
+
+    def test__project_organization__matches(self):
+        self.assertEqual(self.project.organization, self.org)

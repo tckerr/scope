@@ -7,6 +7,6 @@ class OrganizationTestCase(TestCase):
     def setUp(self):
         pass
 
-    def test_organization_class_exists(self):
+    def test__organization__class_exists(self):
         org = Organization()
-        self.assertTrue(True) 
+        self.assertTrue(True)

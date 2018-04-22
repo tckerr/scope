@@ -34,7 +34,7 @@ class OrganizationsAPITestCase(APITestCase):
         self.organization2.delete()
         self.user.delete()
 
-    def test_listOrganizations_listsAllOrganizationsUsersActorIsPartOf(self):
+    def test__list_organizations__lists_all_organizations_user_belongs(self):
         response = self.client.get(reverse('organizations-list'))
         self.assertEquals(response.status_code, status.HTTP_200_OK)
         self.assertEquals(response.data, [
@@ -48,7 +48,7 @@ class OrganizationsAPITestCase(APITestCase):
             }
         ])
 
-    def test_listOrganizations_returnsFiltered(self):
+    def test__list_organizations__filters_on_name(self):
         url = reverse('organizations-list') + '?name=tk2'
         response = self.client.get(url)
         self.assertEquals(response.status_code, status.HTTP_200_OK)
@@ -59,7 +59,7 @@ class OrganizationsAPITestCase(APITestCase):
             }
         ])
 
-    def test_readOrganization_returnsOrgIfUserIsPartOfIt(self):
+    def test__read_organization__returns_org_if_usr_belongs(self):
         url = reverse('organizations-detail', kwargs={'pk': self.organization1.id})
         response = self.client.get(url)
         self.assertEquals(response.status_code, status.HTTP_200_OK)
@@ -68,7 +68,7 @@ class OrganizationsAPITestCase(APITestCase):
             'name': self.organization1.name
         })
 
-    def test_readOrganization_doesNoteReturnOrgIfUserIsNotPartOfIt(self):
+    def test__read_organization__returns_404_if_user_doesnt_belong(self):
         url = reverse('organizations-detail', kwargs={'pk': self.organization3.id})
         response = self.client.get(url)
         self.assertEquals(response.status_code, status.HTTP_404_NOT_FOUND)
