@@ -12,6 +12,7 @@ import {
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {CommonModule} from '@angular/common';
+import {RouterModule} from '@angular/router';
 
 const modules = [
     CommonModule,
@@ -28,7 +29,8 @@ const modules = [
     MatListModule,
     MatCardModule,
     MatTooltipModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule
 ];
 
 @NgModule({

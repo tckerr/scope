@@ -10,9 +10,10 @@ import {LoginFormComponent} from '../auth/login-form/login-form.component';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'app/login', pathMatch: 'full' },
-    { path: 'app', redirectTo: 'app/login', pathMatch: 'full' },
-    { path: 'app/login', component: LoginFormComponent },
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
+    { path: 'login', component: LoginFormComponent },
+    { path: 'forgot', component: LoginFormComponent },
+    { path: 'register', component: LoginFormComponent },
     { path: '**', component: PageNotFoundComponent }
 ];
 

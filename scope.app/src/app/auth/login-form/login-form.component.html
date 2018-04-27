@@ -1,5 +1,7 @@
-<div class="flex-1 container vertical-align-items center-items mt3">
+<div class="container vertical-align-items center-items mt3">
     <div class="mat-elevation-z2 pt4 pr4 pl4 pb3">
+        <h1 class="mat-headline">Sign in</h1>
+        <p class="mat-body">Don't have an account? <a routerLink="/register">Register</a></p>
         <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="container container-menu">
             <mat-form-field>
                 <input matInput
@@ -23,7 +25,8 @@
             </mat-form-field>
             <button mat-raised-button color="primary" [disabled]="submitting">Login</button>
             <mat-progress-bar *ngIf="submitting" class="mt1" mode="indeterminate"></mat-progress-bar>
-            <p color='accent' *ngFor="let message of generalErrors" class="mat-body-2 mat-background-warn text-center">
+            <p class="text-right mat-body" *ngIf="!submitting"><a routerLink="/forgot">Forgot Password?</a></p>
+            <p color='accent' *ngFor="let message of generalErrors" class="mat-error mat-body-2 mat-background-warn text-center">
                 {{message}}
             </p>
         </form>

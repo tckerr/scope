@@ -91,3 +91,7 @@ body {
 .bg-light-gray {
     background-color: #fafafa;
 }
+
+.text-right{
+    text-align: right;
+}
