@@ -9,7 +9,7 @@ The purpose of Scope is to provide a full-featured Django application that demon
 - Messaging
 - Vertical scalability
 
-Please keep in mind that Scope is a work in progress. You can see an early build of the application API at [scopeapp.online](http://scopeapp.online/docs). A front-end is coming soon.
+Please keep in mind that Scope is a work in progress.
 
 # Technology used
 
