@@ -1,0 +1,49 @@
+<div class="container vertical-align-items center-items mt3">
+    <div class="mat-elevation-z2 pt4 pr4 pl4 pb3">
+        <h1 class="mat-headline">Register</h1>
+        <p class="mat-body">Register a new account. Already have one? <a routerLink="/login">Sign in</a></p>
+        <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="container container-menu">
+            <mat-form-field> 
+                <input matInput
+                       type="text"
+                       name="username"
+                       placeholder="username"
+                       required
+                       [(ngModel)]="formData.username.value"
+                       [disabled]="submitting"/>
+                <mat-error *ngFor="let error of formData.username.errors">error: {{error}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput
+                       type="password"
+                       name="password"
+                       placeholder="password"
+                       required
+                       [(ngModel)]="formData.password.value"
+                       [disabled]="submitting"/>
+                <mat-error *ngFor="let error of formData.password.errors">error: {{error}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput
+                       type="passwordRepeat"
+                       name="passwordRepeat"
+                       placeholder="confirm password"
+                       required
+                       [(ngModel)]="formData.passwordRepeat.value"
+                       [disabled]="submitting"/>
+                <mat-error *ngFor="let error of formData.passwordRepeat.errors">error: {{error}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="mb2">
+                <input matInput
+                       type="email"
+                       name="email"
+                       placeholder="email address"
+                       required
+                       [(ngModel)]="formData.email.value"
+                       [disabled]="submitting"/>
+                <mat-error *ngFor="let error of formData.email.errors">error: {{error}}</mat-error>
+            </mat-form-field>
+            <button mat-raised-button color="primary" [disabled]="submitting">Submit</button>
+        </form>
+    </div>
+</div>

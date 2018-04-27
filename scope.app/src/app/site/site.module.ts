@@ -8,12 +8,13 @@ import { FooterComponent } from './footer/footer.component';
 import { RouterModule, Routes } from '@angular/router';
 import {LoginFormComponent} from '../auth/login-form/login-form.component';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
+import {RegisterFormComponent} from '../auth/register-form/register-form.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: LoginFormComponent },
-    { path: 'forgot', component: LoginFormComponent },
-    { path: 'register', component: LoginFormComponent },
+    { path: 'forgot', component: PageNotFoundComponent },
+    { path: 'register', component: RegisterFormComponent },
     { path: '**', component: PageNotFoundComponent }
 ];
 

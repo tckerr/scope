@@ -22,7 +22,9 @@ INSTALLED_APPS = [
     'django_filters',
     'raven.contrib.django.raven_compat',
     'authentication',
+    'authentication_api',
     'diagnostics',
+    'diagnostics_api',
     'project',
     'project_api',
 ]
