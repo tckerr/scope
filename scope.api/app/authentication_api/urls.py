@@ -3,5 +3,5 @@ from rest_framework.authtoken import views
 
 
 urlpatterns = [
-    url(r'^auth/token/', views.obtain_auth_token)
+    url(r'^auth/token/', views.obtain_auth_token, name='auth-token')
 ]
