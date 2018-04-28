@@ -6,13 +6,13 @@ import {DiagnosticsModule} from '../diagnostics/diagnostics.module';
 import {SharedModule} from '../shared/shared.module';
 import { FooterComponent } from './footer/footer.component';
 import { RouterModule, Routes } from '@angular/router';
-import {LoginFormComponent} from '../auth/login-form/login-form.component';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {RegisterFormComponent} from '../auth/register-form/register-form.component';
+import { LoginPageComponent } from './auth/login-page/login-page.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
-    { path: 'login', component: LoginFormComponent },
+    { path: 'login', component: LoginPageComponent },
     { path: 'forgot', component: PageNotFoundComponent },
     { path: 'register', component: RegisterFormComponent },
     { path: '**', component: PageNotFoundComponent }
@@ -29,7 +29,8 @@ const routes: Routes = [
         RootComponent,
         NavigationComponent,
         FooterComponent,
-        PageNotFoundComponent
+        PageNotFoundComponent,
+        LoginPageComponent
     ],
     providers: [],
     bootstrap: [RootComponent]

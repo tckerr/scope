@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {AuthService} from '../services/auth.service';
 import {Credentials} from '../models/credentials';
@@ -18,6 +18,9 @@ export class LoginFormComponent implements OnInit {
     public passwordErrors: string[] = [];
     public usernameErrors: string[] = [];
     public submitting = false;
+
+    @Input()
+    public onSignIn: () => void = () => {console.log('not overridden')};
 
     constructor(authService: AuthService) {
         this.authService = authService;
@@ -40,15 +43,16 @@ export class LoginFormComponent implements OnInit {
     }
 
     private error(e: HttpErrorResponse) {
-        console.log(e);
         this.passwordErrors = e.error.password || [];
         this.usernameErrors = e.error.username || [];
         this.generalErrors = e.error.non_field_errors || [];
-        return this.submitting = false;
+        this.submitting = false;
     }
 
     private success(t: Token) {
-        return this.submitting = false;
+        this.submitting = false;
+        this.onSignIn();
+        console.log("signed in")
     }
 
     ngOnInit() {
