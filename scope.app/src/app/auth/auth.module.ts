@@ -7,6 +7,8 @@ import {PasswordComparisonValidatorDirective} from './register-form/validators/p
 import {UsernameAvailabilityValidatorDirective} from './register-form/validators/username-availability-validator.directive';
 import {CookieModule} from 'ngx-cookie';
 import {AuthTokenStorage} from './services/auth-token-storage.service';
+import {IsAuthenticatedGuard} from 'app/auth/guards/is-authenticated.guard';
+import {IsAnonymousGuard} from './guards/is-anonymous.guard';
 
 @NgModule({
     imports: [
@@ -15,7 +17,9 @@ import {AuthTokenStorage} from './services/auth-token-storage.service';
     ],
     providers: [
         AuthApi,
-        AuthTokenStorage
+        AuthTokenStorage,
+        IsAuthenticatedGuard,
+        IsAnonymousGuard
     ],
     exports: [
         LoginFormComponent,

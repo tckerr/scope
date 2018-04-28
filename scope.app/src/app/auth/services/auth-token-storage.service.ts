@@ -17,6 +17,10 @@ export class AuthTokenStorage {
         this.cookieService.putObject(this.tokenKey, data);
     }
 
+    public isAuthenticated(): boolean {
+        return !!this.retrieveTokenFromStorage();
+    }
+
     public get token() {
         const data = this.retrieveTokenFromStorage();
         if (!data.token) {
