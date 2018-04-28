@@ -1,4 +1,6 @@
-<div class="container container-col ">
-    <code class="code-block p1 mb1">{{projects | json}}</code>
-    <button mat-raised-button color="primary" (click)="fetchProjects()">Fetch projects</button>
+<div class="container container-col">
+    <mat-card class="mb1">
+        <pre class="p1">{{projects | json}}</pre>
+    </mat-card>
+    <button mat-raised-button color="primary"  (click)="fetchProjects()">Fetch projects</button>
 </div>
