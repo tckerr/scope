@@ -9,12 +9,16 @@ import { RouterModule, Routes } from '@angular/router';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {RegisterFormComponent} from '../auth/register-form/register-form.component';
 import { LoginPageComponent } from './auth/login-page/login-page.component';
+import {CookieModule} from 'ngx-cookie';
+import { ProjectDashboardPageComponent } from './project/project-dashboard-page/project-dashboard-page.component';
+import {ProjectModule} from '../project/project.module';
 
 const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: LoginPageComponent },
     { path: 'forgot', component: PageNotFoundComponent },
     { path: 'register', component: RegisterFormComponent },
+    { path: 'projects', component: ProjectDashboardPageComponent },
     { path: '**', component: PageNotFoundComponent }
 ];
 
@@ -22,7 +26,9 @@ const routes: Routes = [
     imports: [
         SharedModule,
         AuthModule,
+        ProjectModule,
         DiagnosticsModule,
+        CookieModule.forRoot(),
         RouterModule.forRoot(routes, { enableTracing: false })
     ],
     declarations: [
@@ -30,7 +36,8 @@ const routes: Routes = [
         NavigationComponent,
         FooterComponent,
         PageNotFoundComponent,
-        LoginPageComponent
+        LoginPageComponent,
+        ProjectDashboardPageComponent
     ],
     providers: [],
     bootstrap: [RootComponent]

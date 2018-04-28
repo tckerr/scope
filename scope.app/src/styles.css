@@ -95,3 +95,9 @@ body {
 .text-right{
     text-align: right;
 }
+
+.code-block{
+    font-family: monospace;
+    color: aquamarine;
+    background-color: darkslateblue;
+}

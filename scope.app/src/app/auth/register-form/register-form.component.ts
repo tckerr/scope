@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {AuthService} from '../services/auth.service';
+import {AuthApi} from '../services/auth-api.service';
 import {FormField} from '../../shared/form-field';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/mergeMap';
@@ -20,13 +20,13 @@ export class RegistrationFormData {
 })
 export class RegisterFormComponent implements OnInit {
 
-    private authService: AuthService;
+    private authService: AuthApi;
 
     public submitting: boolean;
     public formData: RegistrationFormData = new RegistrationFormData();
     private router: Router;
 
-    constructor(authService: AuthService, router: Router) {
+    constructor(authService: AuthApi, router: Router) {
         this.authService = authService;
         this.router = router;
     }

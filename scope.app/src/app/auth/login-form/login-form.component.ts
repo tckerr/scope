@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {AuthService} from '../services/auth.service';
+import {AuthApi} from '../services/auth-api.service';
 import {Credentials} from '../models/credentials';
-import {Token} from '../models/token';
 import {HttpErrorResponse} from '@angular/common/http';
+import {AuthTokenStorage} from '../services/auth-token-storage.service';
 
 @Component({
     selector: 'app-login-form',
@@ -11,7 +11,6 @@ import {HttpErrorResponse} from '@angular/common/http';
     styleUrls: ['./login-form.component.css']
 })
 export class LoginFormComponent implements OnInit {
-    private authService: AuthService;
     public username: string;
     public password: string;
     public generalErrors: string[] = [];
@@ -22,8 +21,7 @@ export class LoginFormComponent implements OnInit {
     @Input()
     public onSignIn: () => void = () => {console.log('not overridden')};
 
-    constructor(authService: AuthService) {
-        this.authService = authService;
+    constructor(private authService: AuthApi, private tokenStorage: AuthTokenStorage) {
     }
 
     public onSubmit(form: NgForm) {
@@ -49,10 +47,10 @@ export class LoginFormComponent implements OnInit {
         this.submitting = false;
     }
 
-    private success(t: Token) {
+    private success(token: string) {
         this.submitting = false;
+        this.tokenStorage.setToken(token);
         this.onSignIn();
-        console.log("signed in")
     }
 
     ngOnInit() {

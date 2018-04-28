@@ -8,16 +8,14 @@ import {timer} from 'rxjs/observable/timer';
 
 @Injectable()
 export class DiagnosticsService {
-    private http: HttpClient;
     private diagnosticFetchIntervalMs: any;
     private diagnosticsFetched: Subject<Diagnostics> = new Subject<Diagnostics>();
     public diagnosticsFetched$: Observable<Diagnostics>;
     private apiUrl: string;
 
-    constructor(http: HttpClient) {
-        this.http = http;
+    constructor(private httpClient: HttpClient) {
         this.diagnosticFetchIntervalMs = environment.settings.diagnosticFetchIntervalMs;
-        this.apiUrl = environment.api.baseUrl + environment.api.diagnostics.list;
+        this.apiUrl = environment.api.baseUrl + '/diagnostics/';
         this.diagnosticsFetched$ = this.diagnosticsFetched.asObservable();
         this.startDiagnosticTimer();
     }
@@ -28,7 +26,7 @@ export class DiagnosticsService {
     }
 
     public fetchDiagnostics() {
-        this.http.get<Diagnostics>(this.apiUrl)
+        this.httpClient.get<Diagnostics>(this.apiUrl)
             .subscribe(d => this.diagnosticsFetched.next(d))
     }
 }

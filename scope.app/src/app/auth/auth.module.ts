@@ -1,17 +1,21 @@
 import {NgModule} from '@angular/core';
 import {LoginFormComponent} from './login-form/login-form.component';
-import {AuthService} from './services/auth.service';
+import {AuthApi} from './services/auth-api.service';
 import {SharedModule} from '../shared/shared.module';
-import { RegisterFormComponent } from './register-form/register-form.component';
-import { PasswordComparisonValidatorDirective } from './register-form/validators/password-comparison-validator.directive';
-import { UsernameAvailabilityValidatorDirective } from './register-form/validators/username-availability-validator.directive';
+import {RegisterFormComponent} from './register-form/register-form.component';
+import {PasswordComparisonValidatorDirective} from './register-form/validators/password-comparison-validator.directive';
+import {UsernameAvailabilityValidatorDirective} from './register-form/validators/username-availability-validator.directive';
+import {CookieModule} from 'ngx-cookie';
+import {AuthTokenStorage} from './services/auth-token-storage.service';
 
 @NgModule({
     imports: [
-        SharedModule
+        SharedModule,
+        CookieModule.forChild()
     ],
     providers: [
-        AuthService
+        AuthApi,
+        AuthTokenStorage
     ],
     exports: [
         LoginFormComponent,
@@ -24,4 +28,5 @@ import { UsernameAvailabilityValidatorDirective } from './register-form/validato
         UsernameAvailabilityValidatorDirective
     ]
 })
-export class AuthModule {}
+export class AuthModule {
+}

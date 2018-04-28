@@ -1,7 +1,7 @@
 import {Directive} from '@angular/core';
 import {AbstractControl, AsyncValidator, NG_ASYNC_VALIDATORS, ValidationErrors} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
-import {AuthService} from '../../services/auth.service';
+import {AuthApi} from '../../services/auth-api.service';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/observable/timer';
 import 'rxjs/add/operator/switchMap';
@@ -11,9 +11,9 @@ import 'rxjs/add/operator/switchMap';
     providers: [{provide: NG_ASYNC_VALIDATORS, useExisting: UsernameAvailabilityValidatorDirective, multi: true}]
 })
 export class UsernameAvailabilityValidatorDirective implements AsyncValidator {
-    private authService: AuthService;
+    private authService: AuthApi;
 
-    constructor(authService: AuthService) {
+    constructor(authService: AuthApi) {
         this.authService = authService;
     }
 
