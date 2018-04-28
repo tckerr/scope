@@ -4,12 +4,6 @@ export const environment = {
         diagnosticFetchIntervalMs: 10000
     },
     api: {
-        baseUrl: '/api',
-        auth: {
-            tokenUrl: '/auth/token/'
-        },
-        diagnostics: {
-            list: '/diagnostics/'
-        }
+        baseUrl: '/api'
     }
 };
