@@ -21,6 +21,10 @@ export class AuthTokenStorage {
         return !!this.retrieveTokenFromStorage();
     }
 
+    public clearToken() {
+        this.cookieService.remove(this.tokenKey);
+    }
+
     public get token() {
         const data = this.retrieveTokenFromStorage();
         if (!data.token) {

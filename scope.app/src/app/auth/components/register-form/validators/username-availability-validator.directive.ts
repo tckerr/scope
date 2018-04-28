@@ -1,10 +1,10 @@
 import {Directive} from '@angular/core';
 import {AbstractControl, AsyncValidator, NG_ASYNC_VALIDATORS, ValidationErrors} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
-import {AuthApi} from '../../services/auth-api.service';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/observable/timer';
 import 'rxjs/add/operator/switchMap';
+import {AuthApi} from '../../../services/auth-api.service';
 
 @Directive({
     selector: '[appUsernameAvailability]',

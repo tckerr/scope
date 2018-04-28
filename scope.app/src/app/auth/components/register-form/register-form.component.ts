@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {AuthApi} from '../services/auth-api.service';
-import {FormField} from '../../shared/form-field';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/mergeMap';
 import {Router} from '@angular/router';
+import {FormField} from '../../../shared/form-field';
+import {AuthApi} from '../../services/auth-api.service';
 
 export class RegistrationFormData {
     public username: FormField<string> = new FormField<string>();

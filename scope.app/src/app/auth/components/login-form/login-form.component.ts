@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {AuthApi} from '../services/auth-api.service';
-import {Credentials} from '../models/credentials';
+import {AuthApi} from '../../services/auth-api.service';
+import {Credentials} from '../../models/credentials';
 import {HttpErrorResponse} from '@angular/common/http';
-import {AuthTokenStorage} from '../services/auth-token-storage.service';
+import {AuthTokenStorage} from '../../services/auth-token-storage.service';
 
 @Component({
     selector: 'app-login-form',

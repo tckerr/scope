@@ -7,13 +7,13 @@ import {SharedModule} from '../shared/shared.module';
 import {FooterComponent} from './footer/footer.component';
 import {RouterModule, Routes} from '@angular/router';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
-import {RegisterFormComponent} from '../auth/register-form/register-form.component';
 import {LoginPageComponent} from './auth/login-page/login-page.component';
 import {CookieModule} from 'ngx-cookie';
 import {ProjectDashboardPageComponent} from './project/project-dashboard-page/project-dashboard-page.component';
 import {ProjectModule} from '../project/project.module';
 import {IsAuthenticatedGuard} from '../auth/guards/is-authenticated.guard';
 import {IsAnonymousGuard} from '../auth/guards/is-anonymous.guard';
+import {RegisterFormComponent} from '../auth/components/register-form/register-form.component';
 
 const routes: Routes = [
     {path: '', redirectTo: '/login', pathMatch: 'full'},
