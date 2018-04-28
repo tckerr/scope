@@ -2,9 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {AuthService} from '../services/auth.service';
 import {FormField} from '../../shared/form-field';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/mergeMap';
+import {Router} from '@angular/router';
 
-
-export class RegistrationFormData{
+export class RegistrationFormData {
     public username: FormField<string> = new FormField<string>();
     public password: FormField<string> = new FormField<string>();
     public passwordRepeat: FormField<string> = new FormField<string>();
@@ -21,28 +23,28 @@ export class RegisterFormComponent implements OnInit {
     private authService: AuthService;
 
     public submitting: boolean;
-    public generalErrors: string[];
-    public passwordErrors: string[];
-    public usernameErrors: string[];
     public formData: RegistrationFormData = new RegistrationFormData();
+    private router: Router;
 
-    constructor(authService: AuthService) {
+    constructor(authService: AuthService, router: Router) {
         this.authService = authService;
+        this.router = router;
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+    }
 
     public onSubmit(form: NgForm) {
+        if (form.invalid) {
+            return;
+        }
         this.submitting = true;
-        this.clearErrors();
-        // this.authService.register(this.registrationData)
-        //     .subscribe(t => this.success(t), e => this.error(e));
-    }
+        const username = this.formData.username.value;
+        const password = this.formData.password.value;
+        const email = this.formData.email.value;
+        this.authService
+            .registerUser(username, password, email)
+            .subscribe(r => this.router.navigate(['/login']), r => this.submitting = false);
 
-    private clearErrors() {
-        this.generalErrors = [];
-        this.passwordErrors = [];
-        this.usernameErrors = [];
     }
-
 }

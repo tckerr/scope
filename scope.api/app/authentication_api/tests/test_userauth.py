@@ -39,6 +39,15 @@ class UserAuthTestCase(APITestCase):
         })
         self.assertEquals(User.objects.filter(username='RegisterTestCase_user1').count(), 1)
 
+    def test__register__sets_email(self):
+        self.client.post(self.url, {'username': 'RegisterTestCase_user1', 'password': '1', 'email': 'a@a.com'})
+        self.assertEquals(User.objects.get(email='a@a.com').username, 'RegisterTestCase_user1')
+
+    def test__register__hashes_password(self):
+        self.client.post(self.url, {'username': 'RegisterTestCase_user1', 'password': '1', 'email': 'a@a.com'})
+        user = User.objects.get(username='RegisterTestCase_user1')
+        self.assertTrue(user.check_password('1'))
+
     def test__list__returns_empty_when_no_search_term_present(self):
         response = self.client.get(self.url)
         self.assertEquals(response.status_code, status.HTTP_200_OK)

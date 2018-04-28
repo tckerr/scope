@@ -10,7 +10,12 @@ import 'rxjs/add/operator/do';
 
 @Injectable()
 export class AuthService {
-    private api: { baseUrl: string; auth: { tokenUrl: string } };
+    private api: {
+        baseUrl: string; auth: {
+            users: string;
+            tokenUrl: string
+        }
+    };
     private _tokenFetched: Subject<Token> = new Subject<Token>();
     public tokenFetched$: Observable<Token>;
     private http: HttpClient;
@@ -24,8 +29,9 @@ export class AuthService {
     }
 
     public get token() {
-        if (!this._token)
+        if (!this._token) {
             throw new Error('No token cached. Did the user sign in?');
+        }
         return this._token;
     }
 
@@ -34,5 +40,21 @@ export class AuthService {
         return this.http.post<{ token: string }>(url, credentials)
             .map(response => new Token(response.token))
             .do(token => this._tokenFetched.next(token));
+    }
+
+    public usernameExists(username: string): Observable<boolean> {
+        const url = this.api.baseUrl + this.api.auth.users;
+        const options = {params: {'username': username}};
+        return this.http.get<[{ username: string }]>(url, options)
+            .map(response => response.length > 0);
+    }
+
+    registerUser(username: string, password: string, email: string): Observable<{username: string, email: string}> {
+        const url = this.api.baseUrl + this.api.auth.users;
+        return this.http.post<{username: string, email: string}>(url, {
+            username: username,
+            password: password,
+            email: email
+        });
     }
 }

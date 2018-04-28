@@ -11,7 +11,8 @@ export const environment = {
     api: {
         baseUrl: 'http://localhost:8000/api',
         auth: {
-            tokenUrl: '/auth/token/'
+            tokenUrl: '/auth/token/',
+            users: '/auth/users/'
         },
         diagnostics: {
             list: '/diagnostics/'

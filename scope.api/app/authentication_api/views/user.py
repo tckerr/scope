@@ -31,7 +31,12 @@ class UserAuthApiView(CreateModelMixin, ListModelMixin, GenericAPIView):
     def post(self, request):
         serializer = CreateUserSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            validated_data = serializer.validated_data
+            # TODO: implement in serializer
+            User.objects.create_user(
+                username=validated_data['username'],
+                email=validated_data['email'],
+                password=validated_data['password'])
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

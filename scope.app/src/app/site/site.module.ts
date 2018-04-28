@@ -23,7 +23,7 @@ const routes: Routes = [
         SharedModule,
         AuthModule,
         DiagnosticsModule,
-        RouterModule.forRoot(routes, { enableTracing: true })
+        RouterModule.forRoot(routes, { enableTracing: false })
     ],
     declarations: [
         RootComponent,
