@@ -14,6 +14,7 @@ import {ProjectModule} from '../project/project.module';
 import {IsAuthenticatedGuard} from '../auth/guards/is-authenticated.guard';
 import {IsAnonymousGuard} from '../auth/guards/is-anonymous.guard';
 import {RegisterFormComponent} from '../auth/components/register-form/register-form.component';
+import { UserMenuComponent } from './navigation/user-menu/user-menu.component';
 
 const routes: Routes = [
     {path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -52,7 +53,8 @@ const routes: Routes = [
         FooterComponent,
         PageNotFoundComponent,
         LoginPageComponent,
-        ProjectDashboardPageComponent
+        ProjectDashboardPageComponent,
+        UserMenuComponent
     ],
     providers: [],
     bootstrap: [RootComponent]

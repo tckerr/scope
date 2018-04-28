@@ -1,0 +1,4 @@
+<button mat-button [matMenuTriggerFor]="menu" *ngIf="isAuthenticated()">Settings</button>
+<mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">Log out</button>
+</mat-menu>
