@@ -14,7 +14,9 @@ import {ProjectModule} from '../project/project.module';
 import {IsAuthenticatedGuard} from '../auth/guards/is-authenticated.guard';
 import {IsAnonymousGuard} from '../auth/guards/is-anonymous.guard';
 import {RegisterFormComponent} from '../auth/components/register-form/register-form.component';
-import { UserMenuComponent } from './navigation/user-menu/user-menu.component';
+import {UserMenuComponent} from './navigation/user-menu/user-menu.component';
+import {DiagnosticsService} from '../diagnostics/services/diagnostics.service';
+import {StateModule} from '../state/state.module';
 
 const routes: Routes = [
     {path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -45,7 +47,8 @@ const routes: Routes = [
         ProjectModule,
         DiagnosticsModule,
         CookieModule.forRoot(),
-        RouterModule.forRoot(routes, {enableTracing: false})
+        RouterModule.forRoot(routes, {enableTracing: false}),
+        StateModule.forRoot()
     ],
     declarations: [
         RootComponent,
@@ -56,7 +59,11 @@ const routes: Routes = [
         ProjectDashboardPageComponent,
         UserMenuComponent
     ],
-    providers: [],
+    providers: [
+        IsAuthenticatedGuard,
+        IsAnonymousGuard,
+        DiagnosticsService
+    ],
     bootstrap: [RootComponent]
 })
 export class SiteModule {

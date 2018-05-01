@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {ProjectsApi} from '../../services/projects-api';
 import {Project} from '../../models/project';
+import {getAllProjects, ProjectsState} from '../../../state/projects/reducers';
+import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs/Observable';
+import {LoadProjects} from '../../../state/projects/actions/projects';
 
 @Component({
     selector: 'app-project-debug',
@@ -8,16 +11,17 @@ import {Project} from '../../models/project';
     styleUrls: ['./project-debug.component.css']
 })
 export class ProjectDebugComponent implements OnInit {
-    public projects: Project[] = [];
+    projects: Observable<Project[]>;
 
-    constructor(private projectsApi: ProjectsApi) {
+    constructor(private store: Store<ProjectsState>) {
     }
 
     ngOnInit() {
+        this.projects = this.store.select(getAllProjects);
+        this.store.dispatch(new LoadProjects());
     }
 
-    public fetchProjects() {
-        this.projectsApi.fetchProjects().subscribe(p => this.projects = p);
+    fetchProjects() {
+        this.store.dispatch(new LoadProjects());
     }
-
 }

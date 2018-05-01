@@ -4,8 +4,6 @@ import {AuthApi} from './services/auth-api.service';
 import {SharedModule} from '../shared/shared.module';
 import {CookieModule} from 'ngx-cookie';
 import {AuthTokenStorage} from './services/auth-token-storage.service';
-import {IsAuthenticatedGuard} from 'app/auth/guards/is-authenticated.guard';
-import {IsAnonymousGuard} from './guards/is-anonymous.guard';
 import {RegisterFormComponent} from './components/register-form/register-form.component';
 import {PasswordComparisonValidatorDirective} from './components/register-form/validators/password-comparison-validator.directive';
 import {UsernameAvailabilityValidatorDirective} from './components/register-form/validators/username-availability-validator.directive';
@@ -17,13 +15,11 @@ import {UsernameAvailabilityValidatorDirective} from './components/register-form
     ],
     providers: [
         AuthApi,
-        AuthTokenStorage,
-        IsAuthenticatedGuard,
-        IsAnonymousGuard
+        AuthTokenStorage
     ],
     exports: [
         LoginFormComponent,
-        RegisterFormComponent
+        RegisterFormComponent,
     ],
     declarations: [
         LoginFormComponent,

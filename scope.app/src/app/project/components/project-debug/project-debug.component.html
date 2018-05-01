@@ -1,6 +1,6 @@
 <div class="container container-col">
     <mat-card class="mb1">
-        <pre class="p1">{{projects | json}}</pre>
+        <pre class="p1">{{projects | async | json}}</pre>
     </mat-card>
     <button mat-raised-button color="primary"  (click)="fetchProjects()">Fetch projects</button>
 </div>
