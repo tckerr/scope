@@ -1,9 +1,15 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {
+    AuthState,
+    getAuthLoginGeneralErrors,
+    getAuthLoginPasswordErrors,
+    getAuthLoginUsernameErrors,
+    getIsGeneratingToken
+} from '../../../state/auth/reducers';
+import {Store} from '@ngrx/store';
+import {GenerateToken} from '../../../state/auth/actions/auth';
 import {NgForm} from '@angular/forms';
-import {AuthApi} from '../../services/auth-api.service';
-import {Credentials} from '../../models/credentials';
-import {HttpErrorResponse} from '@angular/common/http';
-import {AuthTokenStorage} from '../../services/auth-token-storage.service';
 
 @Component({
     selector: 'app-login-form',
@@ -11,49 +17,28 @@ import {AuthTokenStorage} from '../../services/auth-token-storage.service';
     styleUrls: ['./login-form.component.css']
 })
 export class LoginFormComponent implements OnInit {
-    public username: string;
-    public password: string;
-    public generalErrors: string[] = [];
-    public passwordErrors: string[] = [];
-    public usernameErrors: string[] = [];
-    public submitting = false;
+    public submitting: Observable<boolean>;
+    private generalErrors: Observable<string[]>;
+    private usernameErrors: Observable<string[]>;
+    private passwordErrors: Observable<string[]>;
 
-    @Input()
-    public onSignIn: () => void = () => {console.log('not overridden')};
-
-    constructor(private authService: AuthApi, private tokenStorage: AuthTokenStorage) {
+    constructor(private store: Store<AuthState>) {
     }
 
-    public onSubmit(form: NgForm) {
-        this.submitting = true;
-        this.clearErrors();
-        const credentials = new Credentials();
-        credentials.username = this.username;
-        credentials.password = this.password;
-        this.authService.fetchToken(credentials)
-            .subscribe(t => this.success(t), e => this.error(e));
-    }
-
-    private clearErrors() {
-        this.generalErrors = [];
-        this.passwordErrors = [];
-        this.usernameErrors = [];
-    }
-
-    private error(e: HttpErrorResponse) {
-        this.passwordErrors = e.error.password || [];
-        this.usernameErrors = e.error.username || [];
-        this.generalErrors = e.error.non_field_errors || [];
-        this.submitting = false;
-    }
-
-    private success(token: string) {
-        this.submitting = false;
-        this.tokenStorage.setToken(token);
-        this.onSignIn();
+    public onSubmit(form: NgForm, username: string, password: string) {
+        if (form.valid) {
+            this.store.dispatch(new GenerateToken({
+                username: username,
+                password: password
+            }))
+        }
     }
 
     ngOnInit() {
+        this.submitting = this.store.select(getIsGeneratingToken);
+        this.generalErrors = this.store.select(getAuthLoginGeneralErrors);
+        this.usernameErrors = this.store.select(getAuthLoginUsernameErrors);
+        this.passwordErrors = this.store.select(getAuthLoginPasswordErrors);
     }
 
 }

@@ -1,6 +1,7 @@
 import {createActionType} from '../../shared/utils';
 import {Action} from '@ngrx/store';
 import {Credentials} from '../../../auth/models/credentials';
+import {HttpErrorResponse} from '@angular/common/http';
 
 export const GENERATE_TOKEN = createActionType('GENERATE_TOKEN');
 export const GENERATE_TOKEN_SUCCESS = createActionType('GENERATE_TOKEN_SUCCESS');
@@ -23,7 +24,7 @@ export class GenerateTokenFailure implements Action {
     readonly type = GENERATE_TOKEN_FAILURE;
 
     // TODO: craft response type for errors
-    constructor(public payload: {errors: any}) {
+    constructor(public payload: {response: HttpErrorResponse}) {
     }
 }
 export class ClearToken implements Action {

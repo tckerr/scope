@@ -11,6 +11,7 @@ import * as fromProjects from './projects/reducers';
 import * as fromAuth from './auth/reducers';
 import {AuthEffects} from './auth/effects/auth';
 import {ProjectsEffects} from './projects/effects/projects';
+import {RouterEffects} from './router/effects/router';
 
 @NgModule({
     imports: [
@@ -22,6 +23,7 @@ import {ProjectsEffects} from './projects/effects/projects';
         StoreModule.forFeature('auth', fromAuth.reducers),
         StoreRouterConnectingModule.forRoot(),
         EffectsModule.forRoot([AppEffects]),
+        EffectsModule.forFeature([RouterEffects]),
         EffectsModule.forFeature([ProjectsEffects]),
         EffectsModule.forFeature([AuthEffects]),
         StoreDevtoolsModule.instrument()
