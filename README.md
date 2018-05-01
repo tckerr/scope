@@ -15,7 +15,7 @@ Please keep in mind that Scope is a work in progress.
 
 - **Web app backend**: [Django](https://www.djangoproject.com/), [Django REST Framework](http://www.django-rest-framework.org/), running a [uWSGI](https://github.com/unbit/uwsgi) app server and [Supervisord](http://supervisord.org/) for process control
 - **Web server**: [Nginx](https://www.nginx.com/)
-- **Front end**: [Angular](https://angular.io/)
+- **Front end**: [Angular](https://angular.io/), using [Material](https://material.angular.io) and [Reactive Extensions (ngrx)](http://ngrx.github.io/)
 - **Version control**: [Git](https://git-scm.com/)
 - **CI Server**: [Travis CI](https://travis-ci.org), polling the [develop branch](https://github.com/tckerr/scope) (see our most recent builds [here](https://travis-ci.org/tckerr/scope))
 - **Container Software**: [Docker](https://www.docker.com/)
