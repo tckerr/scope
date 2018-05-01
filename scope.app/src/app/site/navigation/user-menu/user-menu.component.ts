@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthTokenStorage} from '../../../auth/services/auth-token-storage.service';
-import {Router} from '@angular/router';
+import {AuthState, getIsAuthenticated} from '../../../state/auth/reducers';
+import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs/Observable';
+import {ClearToken} from '../../../state/auth/actions/auth';
 
 @Component({
     selector: 'app-user-menu',
@@ -8,19 +10,16 @@ import {Router} from '@angular/router';
     styleUrls: ['./user-menu.component.css']
 })
 export class UserMenuComponent implements OnInit {
+    private isAuthenticated: Observable<boolean>;
 
-    constructor(private tokenStorage: AuthTokenStorage, private router: Router) {
+    constructor(private store: Store<AuthState>) {
     }
 
     ngOnInit() {
-    }
-
-    isAuthenticated(){
-        return this.tokenStorage.isAuthenticated();
+        this.isAuthenticated = this.store.select(getIsAuthenticated);
     }
 
     logout() {
-        this.tokenStorage.clearToken();
-        this.router.navigate(['/login'])
+        this.store.dispatch(new ClearToken());
     }
 }

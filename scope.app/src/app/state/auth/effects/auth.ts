@@ -3,11 +3,17 @@ import {Actions, Effect} from '@ngrx/effects';
 import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import {catchError, map, switchMap} from 'rxjs/operators';
-import {GENERATE_TOKEN, GENERATE_TOKEN_SUCCESS, GenerateToken, GenerateTokenFailure, GenerateTokenSuccess} from '../actions/auth';
+import {
+    CLEAR_TOKEN,
+    GENERATE_TOKEN,
+    GENERATE_TOKEN_SUCCESS,
+    GenerateToken,
+    GenerateTokenFailure,
+    GenerateTokenSuccess
+} from '../actions/auth';
 import {AuthApi} from '../../../auth/services/auth-api.service';
 import {of} from 'rxjs/observable/of';
 import * as RouterActions from './../../router/actions/router';
-import {AuthTokenStorage} from '../../../auth/services/auth-token-storage.service';
 
 @Injectable()
 export class AuthEffects {
@@ -16,13 +22,16 @@ export class AuthEffects {
         .ofType<GenerateToken>(GENERATE_TOKEN)
         .pipe(
             switchMap((action) => this.authApi.fetchToken(action.payload).pipe(
-                map(token => {
-                    // TODO: move to store and initialize from this
-                    this.tokenStorage.setToken(token);
-                    return new GenerateTokenSuccess({token: token})
-                }),
-                catchError((err, obs) => of(new GenerateTokenFailure({response: err})))
+                map(token => new GenerateTokenSuccess({token: token})),
+                catchError(err => of(new GenerateTokenFailure({response: err})))
             )),
+        );
+
+    @Effect()
+    redirectAfterLogout: Observable<Action> = this.actions
+        .ofType<GenerateToken>(CLEAR_TOKEN)
+        .pipe(
+            switchMap(() => of(new RouterActions.Go({path: ['/login']}))),
         );
 
     @Effect()
@@ -33,7 +42,6 @@ export class AuthEffects {
         );
 
     constructor(private actions: Actions,
-                private authApi: AuthApi,
-                private tokenStorage: AuthTokenStorage) {
+                private authApi: AuthApi) {
     }
 }

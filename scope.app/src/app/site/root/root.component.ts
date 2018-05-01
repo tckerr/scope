@@ -10,6 +10,7 @@ export class RootComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }

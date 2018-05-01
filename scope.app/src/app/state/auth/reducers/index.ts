@@ -20,6 +20,10 @@ export const getAuthToken = createSelector(
     getAuthState,
     (state) => state.auth.token
 );
+export const getIsAuthenticated = createSelector(
+    getAuthState,
+    (state) => state.auth.token != null
+);
 
 export const getIsGeneratingToken = createSelector(
     getAuthState,

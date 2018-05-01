@@ -1,22 +1,19 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
-import {AuthTokenStorage} from '../services/auth-token-storage.service';
+import {AuthState, getIsAuthenticated} from '../../state/auth/reducers';
+import {Store} from '@ngrx/store';
 
 @Injectable()
 export class IsAuthenticatedGuard implements CanActivate {
 
-    constructor(private tokenStorage: AuthTokenStorage, private router: Router) {
+    constructor(private store: Store<AuthState>) {
 
     }
 
     canActivate(
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-        const authenticated = this.tokenStorage.isAuthenticated();
-        if (!authenticated) {
-            this.router.navigate(['/login']);
-        }
-        return authenticated;
+        return this.store.select(getIsAuthenticated);
     }
 }

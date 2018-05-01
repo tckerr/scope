@@ -3,7 +3,6 @@ import {LoginFormComponent} from './components/login-form/login-form.component';
 import {AuthApi} from './services/auth-api.service';
 import {SharedModule} from '../shared/shared.module';
 import {CookieModule} from 'ngx-cookie';
-import {AuthTokenStorage} from './services/auth-token-storage.service';
 import {RegisterFormComponent} from './components/register-form/register-form.component';
 import {PasswordComparisonValidatorDirective} from './components/register-form/validators/password-comparison-validator.directive';
 import {UsernameAvailabilityValidatorDirective} from './components/register-form/validators/username-availability-validator.directive';
@@ -14,8 +13,7 @@ import {UsernameAvailabilityValidatorDirective} from './components/register-form
         CookieModule.forChild()
     ],
     providers: [
-        AuthApi,
-        AuthTokenStorage
+        AuthApi
     ],
     exports: [
         LoginFormComponent,

@@ -1,21 +1,16 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
-import {AuthTokenStorage} from '../services/auth-token-storage.service';
+import {Store} from '@ngrx/store';
+import {AuthState, getIsAuthenticated} from '../../state/auth/reducers';
 
 @Injectable()
 export class IsAnonymousGuard implements CanActivate {
-    constructor(private tokenStorage: AuthTokenStorage, private router: Router) {
-
-    }
+    constructor(private store: Store<AuthState>) {    }
 
     canActivate(
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-        const anonymous = !this.tokenStorage.isAuthenticated();
-        if (!anonymous) {
-            this.router.navigate(['/projects']);
-        }
-        return anonymous;
+        return this.store.select(getIsAuthenticated).map(auth => !auth);
     }
 }
