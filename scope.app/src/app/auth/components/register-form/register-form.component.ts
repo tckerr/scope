@@ -1,17 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/mergeMap';
-import {Router} from '@angular/router';
-import {FormField} from '../../../shared/form-field';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {usernameAvailability} from './validators/username-availability-validator.directive';
 import {AuthApi} from '../../services/auth-api.service';
-
-export class RegistrationFormData {
-    public username: FormField<string> = new FormField<string>();
-    public password: FormField<string> = new FormField<string>();
-    public passwordRepeat: FormField<string> = new FormField<string>();
-    public email: FormField<string> = new FormField<string>();
-}
+import {AuthState, getAuthState} from '../../../state/auth/reducers';
+import {Store} from '@ngrx/store';
+import {RegisterUser} from '../../../state/auth/actions/auth';
+import {Observable} from 'rxjs/Observable';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
     selector: 'app-register-form',
@@ -19,32 +14,65 @@ export class RegistrationFormData {
     styleUrls: ['./register-form.component.css']
 })
 export class RegisterFormComponent implements OnInit {
+    private registerForm: FormGroup;
+    private waitingForResponse: Observable<boolean>;
+    private errorResponse: Observable<HttpErrorResponse>;
 
-    private authService: AuthApi;
-
-    public submitting: boolean;
-    public formData: RegistrationFormData = new RegistrationFormData();
-    private router: Router;
-
-    constructor(authService: AuthApi, router: Router) {
-        this.authService = authService;
-        this.router = router;
+    constructor(
+        private formBuilder: FormBuilder,
+        private authApi: AuthApi,
+        private store: Store<AuthState>) {
+        this.createForm();
     }
 
     ngOnInit() {
+        this.waitingForResponse = this.store
+            .select(getAuthState)
+            .map(state => state.auth.registration.waitingForResponse);
+        this.waitingForResponse.subscribe(w => {
+            if (w) {
+                this.registerForm.disable()
+            } else {
+                this.registerForm.enable()
+            }
+        });
+        this.errorResponse = this.store
+            .select(getAuthState)
+            .map(state => state.auth.registration.errorResponse)
+            .do(res => {
+                if (!res) {
+                    return;
+                }
+                Object.keys(res.error).forEach(key => {
+                    const errors = [];
+                    for (let i = 0; i < res.error[key].length; i++) {
+                        const obj = {};
+                        obj[key] = res.error[key][0];
+                        errors.push(obj);
+                    }
+                    this.registerForm.controls[key].setErrors(errors);
+                });
+            });
     }
 
-    public onSubmit(form: NgForm) {
-        if (form.invalid) {
-            return;
-        }
-        this.submitting = true;
-        const username = this.formData.username.value;
-        const password = this.formData.password.value;
-        const email = this.formData.email.value;
-        this.authService
-            .registerUser(username, password, email)
-            .subscribe(r => this.router.navigate(['/login']), r => this.submitting = false);
+    private createForm() {
+        this.registerForm = this.formBuilder.group({
+            username: ['', Validators.required, usernameAvailability(this.authApi)],
+            password: ['', [Validators.required, Validators.maxLength(150)]],
+            email: ['', [Validators.required, Validators.email]]
+        })
+    }
 
+    public hasFieldErrors(fieldName: string, errorType: string) {
+        return !!(this.registerForm.controls[fieldName].errors
+            && !this.registerForm.controls[fieldName].pristine
+            && this.registerForm.controls[fieldName].errors[errorType]);
+    }
+
+    public onSubmit(form: FormGroup) {
+        if (form.invalid) {
+            throw new Error('Cannot submit an invalid form')
+        }
+        this.store.dispatch(new RegisterUser(form.getRawValue()))
     }
 }

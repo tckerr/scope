@@ -1,74 +1,106 @@
+<!--<div class="container vertical-align-items center-items mt3">-->
+    <!--<div class="mat-elevation-z2 pt4 pr4 pl4 pb3" style="min-height: 460px">-->
+        <!--<h1 class="mat-headline">Register</h1>-->
+        <!--<p class="mat-body">Register a new account. Already have one? <a routerLink="/login">Sign in</a></p>-->
+        <!--<p class="mat-body">Username Status: {{usernameStatus}}</p>-->
+        <!--<form #form="ngForm" (ngSubmit)="onSubmit(form)" class="container container-menu">-->
+            <!--<mat-form-field>-->
+                <!--<input matInput-->
+                       <!--#username="ngModel"-->
+                       <!--type="text"-->
+                       <!--name="username"-->
+                       <!--placeholder="username"-->
+                       <!--required-->
+                       <!--[(ngModel)]="formData.username.value"-->
+                       <!--[disabled]="submitting"-->
+                       <!--appUsernameAvailability/>-->
+                <!--<mat-error *ngFor="let error of formData.username.errors">error: {{error}}</mat-error>-->
+                <!--<mat-error *ngIf="username.errors && username.errors.appUsernameAvailability">error:-->
+                    <!--{{username.errors.appUsernameAvailability}}-->
+                <!--</mat-error>-->
+            <!--</mat-form-field>-->
+            <!--<mat-form-field>-->
+                <!--<input matInput-->
+                       <!--#password="ngModel"-->
+                       <!--type="password"-->
+                       <!--name="password"-->
+                       <!--placeholder="password"-->
+                       <!--required-->
+                       <!--appPasswordComparison-->
+                       <!--[sourcePassword]="formData.passwordRepeat.value"-->
+                       <!--maxlength="150"-->
+                       <!--[(ngModel)]="formData.password.value"-->
+                       <!--[disabled]="submitting"/>-->
+                <!--<mat-error *ngFor="let error of formData.password.errors">error: {{error}}</mat-error>-->
+                <!--<mat-error *ngIf="password.errors && password.errors.appPasswordComparison">error:-->
+                    <!--{{password.errors.appPasswordComparison}}-->
+                <!--</mat-error>-->
+            <!--</mat-form-field>-->
+            <!--{{formData.passwordRepeat.errors}}-->
+            <!--<mat-form-field>-->
+                <!--<input matInput-->
+                       <!--#passwordRepeat="ngModel"-->
+                       <!--type="password"-->
+                       <!--name="passwordRepeat"-->
+                       <!--placeholder="confirm password"-->
+                       <!--required-->
+                       <!--appPasswordComparison-->
+                       <!--[sourcePassword]="formData.password.value"-->
+                       <!--maxlength="150"-->
+                       <!--[(ngModel)]="formData.passwordRepeat.value"-->
+                       <!--[disabled]="submitting"/>-->
+                <!--<mat-error *ngFor="let error of formData.passwordRepeat.errors">error: {{error}}</mat-error>-->
+                <!--<mat-error *ngIf="passwordRepeat.errors && passwordRepeat.errors.appPasswordComparison">error:-->
+                    <!--{{passwordRepeat.errors.appPasswordComparison}}-->
+                <!--</mat-error>-->
+            <!--</mat-form-field>-->
+            <!--<mat-form-field class="mb2">-->
+                <!--<input matInput-->
+                       <!--type="email"-->
+                       <!--name="email"-->
+                       <!--placeholder="email address"-->
+                       <!--required-->
+                       <!--email-->
+                       <!--[(ngModel)]="formData.email.value"-->
+                       <!--[disabled]="submitting"/>-->
+                <!--<mat-error *ngFor="let error of formData.email.errors">error: {{error}}</mat-error>-->
+            <!--</mat-form-field>-->
+            <!--<button mat-raised-button color="primary" [disabled]="submitting || !form.valid">Submit</button>-->
+            <!--<mat-progress-bar-->
+                <!--*ngIf="form.status == 'PENDING'"-->
+                <!--mode="indeterminate"></mat-progress-bar>-->
+        <!--</form>-->
+    <!--</div>-->
+<!--</div>-->
 <div class="container vertical-align-items center-items mt3">
-    <div class="mat-elevation-z2 pt4 pr4 pl4 pb3" style="min-height: 460px">
+    <div class="mat-elevation-z2 pt4 pr4 pl4 pb3">
         <h1 class="mat-headline">Register</h1>
         <p class="mat-body">Register a new account. Already have one? <a routerLink="/login">Sign in</a></p>
-        <p class="mat-body">Username Status: {{usernameStatus}}</p>
-        <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="container container-menu">
+        <form #form="ngForm"
+              [formGroup]="registerForm"
+            (ngSubmit)="onSubmit(registerForm)"
+            class="container container-menu">
             <mat-form-field>
-                <input matInput
-                       #username="ngModel"
-                       type="text"
-                       name="username"
-                       placeholder="username"
-                       required
-                       [(ngModel)]="formData.username.value"
-                       [disabled]="submitting"
-                       appUsernameAvailability/>
-                <mat-error *ngFor="let error of formData.username.errors">error: {{error}}</mat-error>
-                <mat-error *ngIf="username.errors && username.errors.appUsernameAvailability">error:
-                    {{username.errors.appUsernameAvailability}}
-                </mat-error>
+                <input matInput placeholder="username" formControlName="username"/>
+                <mat-error *ngIf="hasFieldErrors('username', 'required')">This field is required</mat-error>
+                <mat-error *ngIf="hasFieldErrors('username', 'usernameAvailability')">A user with that username already exists.</mat-error>
+                <mat-error *ngFor="let error of ((errorResponse | async)?.error['username'] || [])">{{error}}</mat-error>
             </mat-form-field>
             <mat-form-field>
-                <input matInput
-                       #password="ngModel"
-                       type="password"
-                       name="password"
-                       placeholder="password"
-                       required
-                       appPasswordComparison
-                       [sourcePassword]="formData.passwordRepeat.value"
-                       maxlength="150"
-                       [(ngModel)]="formData.password.value"
-                       [disabled]="submitting"/>
-                <mat-error *ngFor="let error of formData.password.errors">error: {{error}}</mat-error>
-                <mat-error *ngIf="password.errors && password.errors.appPasswordComparison">error:
-                    {{password.errors.appPasswordComparison}}
-                </mat-error>
+                <input matInput #password type="password" placeholder="password" formControlName="password"/>
+                <mat-error *ngIf="hasFieldErrors('password', 'required')">This field is required</mat-error>
+                <mat-error *ngFor="let error of ((errorResponse | async)?.error['password'] || [])">{{error}}</mat-error>
             </mat-form-field>
-            {{formData.passwordRepeat.errors}}
             <mat-form-field>
-                <input matInput
-                       #passwordRepeat="ngModel"
-                       type="password"
-                       name="passwordRepeat"
-                       placeholder="confirm password"
-                       required
-                       appPasswordComparison
-                       [sourcePassword]="formData.password.value"
-                       maxlength="150"
-                       [(ngModel)]="formData.passwordRepeat.value"
-                       [disabled]="submitting"/>
-                <mat-error *ngFor="let error of formData.passwordRepeat.errors">error: {{error}}</mat-error>
-                <mat-error *ngIf="passwordRepeat.errors && passwordRepeat.errors.appPasswordComparison">error:
-                    {{passwordRepeat.errors.appPasswordComparison}}
-                </mat-error>
+                <input matInput #email type="email" placeholder="email" formControlName="email"/>
+                <mat-error *ngIf="hasFieldErrors('email', 'required')">This field is required</mat-error>
+                <mat-error *ngIf="email.value && hasFieldErrors('email', 'email')">Invalid email format</mat-error>
+                <mat-error *ngFor="let error of ((errorResponse | async)?.error['email'] || [])">{{error}}</mat-error>
             </mat-form-field>
-            <mat-form-field class="mb2">
-                <input matInput
-                       type="email"
-                       name="email"
-                       placeholder="email address"
-                       required
-                       email
-                       [(ngModel)]="formData.email.value"
-                       [disabled]="submitting"/>
-                <mat-error *ngFor="let error of formData.email.errors">error: {{error}}</mat-error>
-            </mat-form-field>
-            <button mat-raised-button color="primary" [disabled]="submitting || !form.valid">Submit</button>
-            <mat-progress-bar
-                *ngIf="form.status == 'PENDING'"
-                mode="indeterminate"></mat-progress-bar>
+        <button type="submit"
+                mat-raised-button
+                color="primary"
+                [disabled]="registerForm.invalid || (waitingForResponse | async)">Submit</button>
         </form>
     </div>
 </div>

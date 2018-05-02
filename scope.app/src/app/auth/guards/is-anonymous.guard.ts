@@ -6,7 +6,8 @@ import {AuthState, getIsAuthenticated} from '../../state/auth/reducers';
 
 @Injectable()
 export class IsAnonymousGuard implements CanActivate {
-    constructor(private store: Store<AuthState>) {    }
+    constructor(private store: Store<AuthState>) {
+    }
 
     canActivate(
         next: ActivatedRouteSnapshot,

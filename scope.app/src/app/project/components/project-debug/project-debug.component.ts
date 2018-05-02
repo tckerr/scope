@@ -24,4 +24,5 @@ export class ProjectDebugComponent implements OnInit {
     fetchProjects() {
         this.store.dispatch(new LoadProjects());
     }
+
 }

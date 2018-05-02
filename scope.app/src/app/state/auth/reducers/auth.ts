@@ -1,4 +1,13 @@
-import {AuthAction, CLEAR_TOKEN, GENERATE_TOKEN, GENERATE_TOKEN_FAILURE, GENERATE_TOKEN_SUCCESS} from '../actions/auth';
+import {
+    AuthAction,
+    CLEAR_TOKEN,
+    GENERATE_TOKEN,
+    GENERATE_TOKEN_FAILURE,
+    GENERATE_TOKEN_SUCCESS,
+    REGISTER_USER,
+    REGISTER_USER_FAILURE,
+    REGISTER_USER_SUCCESS
+} from '../actions/auth';
 import {HttpErrorResponse} from '@angular/common/http';
 
 export interface State {
@@ -6,6 +15,10 @@ export interface State {
     loginProcess: {
         errorResponse: HttpErrorResponse,
         isGeneratingToken: boolean
+    },
+    registration: {
+        errorResponse: HttpErrorResponse,
+        waitingForResponse: boolean
     }
 }
 
@@ -14,6 +27,10 @@ const defaultState: State = {
     loginProcess: {
         errorResponse: null,
         isGeneratingToken: false
+    },
+    registration: {
+        errorResponse: null,
+        waitingForResponse: false
     }
 };
 
@@ -44,6 +61,29 @@ export function reducer(state: State = defaultState, action: AuthAction) {
                 loginProcess: {
                     isGeneratingToken: false,
                     errorResponse: null
+                }
+            };
+        case REGISTER_USER:
+            return {
+                ...state,
+                registration: {
+                    waitingForResponse: true
+                }
+            };
+        case REGISTER_USER_SUCCESS:
+            return {
+                ...state,
+                registration: {
+                    errorResponse: null,
+                    waitingForResponse: false
+                }
+            };
+        case REGISTER_USER_FAILURE:
+            return {
+                ...state,
+                registration: {
+                    errorResponse: action.payload,
+                    waitingForResponse: false
                 }
             };
         default:

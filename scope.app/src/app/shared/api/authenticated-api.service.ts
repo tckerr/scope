@@ -4,6 +4,8 @@ import {AuthState, getAuthToken, getIsAuthenticated} from '../../state/auth/redu
 import {Store} from '@ngrx/store';
 import {NotAuthenticatedError} from '../../auth/errors/not-authenticated-error';
 import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/take';
 
 @Injectable()
 export class AuthenticatedApi {
@@ -29,6 +31,7 @@ export class AuthenticatedApi {
                     'Authorization': `Token ${token}`
                 });
             })
+            .take(1);
     }
 
 }

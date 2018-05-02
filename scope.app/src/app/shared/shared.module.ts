@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
     MatButtonModule, MatCardModule,
     MatChipsModule,
@@ -30,7 +30,8 @@ const modules = [
     MatCardModule,
     MatTooltipModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    ReactiveFormsModule
 ];
 
 @NgModule({

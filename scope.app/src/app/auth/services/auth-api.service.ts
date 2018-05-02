@@ -6,6 +6,7 @@ import {Credentials} from '../models/credentials';
 import {HttpClient} from '@angular/common/http';
 import 'rxjs/add/operator/do';
 import {AuthUserSummary} from '../models/auth-user-summary';
+import {UserRegistrationData} from '../../state/auth/models/user-registration-data';
 
 @Injectable()
 export class AuthApi {
@@ -26,12 +27,8 @@ export class AuthApi {
             .map(response => response.length > 0);
     }
 
-    public registerUser(username: string, password: string, email: string): Observable<AuthUserSummary> {
+    public registerUser(data: UserRegistrationData): Observable<AuthUserSummary> {
         const url = environment.api.baseUrl + '/auth/users/';
-        return this.http.post<AuthUserSummary>(url, {
-            username: username,
-            password: password,
-            email: email
-        });
+        return this.http.post<AuthUserSummary>(url, data);
     }
 }
