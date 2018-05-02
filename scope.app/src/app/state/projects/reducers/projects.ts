@@ -5,13 +5,11 @@ import {LOAD_PROJECTS} from '../actions/load-projects';
 import {LOAD_PROJECTS_SUCCESS} from '../actions/load-projects-success';
 
 export interface State extends EntityState<Project> {
-    selectedProjectId: number;
 }
 
 export const adapter: EntityAdapter<Project> = createEntityAdapter();
 
 const initialState: State = adapter.getInitialState({
-    selectedProjectId: null
 });
 
 export function reducer(state: State = initialState, action: ProjectsAction) {

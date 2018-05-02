@@ -1,29 +1,29 @@
-import * as fromProjects from './projects';
+import * as fromOrg from './organizations';
 import {createFeatureSelector, createSelector} from '@ngrx/store';
 import {AppState} from '../../app-state';
 
-export interface ProjectsState {
-    projects: fromProjects.State;
+export interface OrganizationsState {
+    projects: fromOrg.State;
 }
 
 export interface State extends AppState {
-    projects: ProjectsState
+    projects: OrganizationsState
 }
 
 export const reducers = {
-    projects: fromProjects.reducer
+    projects: fromOrg.reducer
 };
 
-export const getProjectsState = createFeatureSelector<ProjectsState>('projects');
+export const getOrganizationsState = createFeatureSelector<OrganizationsState>('organizations');
 
-export const getProjectsEntityState = createSelector(
-    getProjectsState,
+export const getOrganizationsEntityState = createSelector(
+    getOrganizationsState,
     (state) => state.projects
 );
 
 export const {
-    selectAll: getAllProjects,
-    selectEntities: getProjectEntities,
-    selectIds: getProjectIds,
-    selectTotal: getProjectsTotal
-} = fromProjects.adapter.getSelectors(getProjectsEntityState);
+    selectAll: getAllOrgs,
+    selectEntities: getOrgEntities,
+    selectIds: getOrgIds,
+    selectTotal: getOrgTotal
+} = fromOrg.adapter.getSelectors(getOrganizationsEntityState);
