@@ -27,14 +27,3 @@ export const {
     selectIds: getProjectIds,
     selectTotal: getProjectsTotal
 } = fromProjects.adapter.getSelectors(getProjectsEntityState);
-
-export const getSelectedProjectId = createSelector(
-    getProjectsEntityState,
-    fromProjects.getSelectedProjectId
-);
-
-export const getSelectedPower = createSelector(
-    getProjectEntities,
-    getSelectedProjectId,
-    (entities, selectedProjectId) => selectedProjectId && entities[selectedProjectId]
-);

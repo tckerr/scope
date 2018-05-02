@@ -3,7 +3,7 @@ import {Project} from '../../models/project';
 import {getAllProjects, ProjectsState} from '../../../state/projects/reducers';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
-import {LoadProjects} from '../../../state/projects/actions/projects';
+import {LoadProjects} from '../../../state/projects/actions/load-projects';
 
 @Component({
     selector: 'app-project-debug',
