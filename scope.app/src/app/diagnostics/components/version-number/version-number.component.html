@@ -1,1 +1,1 @@
-<code *ngIf="applicationVersion">v{{applicationVersion}}</code>
+<code *ngIf="diagnostics | async as diagnostic">v{{diagnostic.applicationVersion}}</code>

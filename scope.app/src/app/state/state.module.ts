@@ -9,9 +9,11 @@ import {appMetaReducers, appReducer} from './app-reducer';
 import {CustomSerializer} from './shared/utils';
 import * as fromProjects from './projects/reducers';
 import * as fromAuth from './auth/reducers';
+import * as fromDiagnostics from './diagnostics/reducers';
 import {AuthEffects} from './auth/effects/auth';
 import {ProjectsEffects} from './projects/effects/projects';
 import {RouterEffects} from './router/effects/router';
+import {DiagnosticsEffects} from './diagnostics/effects/diagnostics';
 
 @NgModule({
     imports: [
@@ -21,11 +23,13 @@ import {RouterEffects} from './router/effects/router';
         }),
         StoreModule.forFeature('projects', fromProjects.reducers),
         StoreModule.forFeature('auth', fromAuth.reducers),
+        StoreModule.forFeature('diagnostics', fromDiagnostics.reducers),
         StoreRouterConnectingModule.forRoot(),
         EffectsModule.forRoot([AppEffects]),
         EffectsModule.forFeature([RouterEffects]),
         EffectsModule.forFeature([ProjectsEffects]),
         EffectsModule.forFeature([AuthEffects]),
+        EffectsModule.forFeature([DiagnosticsEffects]),
         StoreDevtoolsModule.instrument()
     ],
     declarations: []

@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {VersionNumberComponent} from './components/version-number/version-number.component';
 import {SharedModule} from '../shared/shared.module';
 import {DatabaseStatusComponent} from './components/database-status/database-status.component';
+import {DiagnosticsApi} from './services/diagnostics-api.service';
 
 @NgModule({
     imports: [
@@ -11,7 +12,9 @@ import {DatabaseStatusComponent} from './components/database-status/database-sta
         VersionNumberComponent,
         DatabaseStatusComponent
     ],
-    providers: [],
+    providers: [
+        DiagnosticsApi
+    ],
     exports: [
         VersionNumberComponent,
         DatabaseStatusComponent

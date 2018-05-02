@@ -1,5 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {DiagnosticsService} from '../../services/diagnostics.service';
+import {DiagnosticsState} from '../../../state/diagnostics/reducers';
+import {Store} from '@ngrx/store';
+import {getDiagnostics} from '../../../state/diagnostics/selectors/diagnostics';
+import {Observable} from 'rxjs/Observable';
+import {Diagnostics} from '../../models/diagnostics';
 
 @Component({
     selector: 'app-version-number',
@@ -8,16 +12,13 @@ import {DiagnosticsService} from '../../services/diagnostics.service';
 })
 export class VersionNumberComponent implements OnInit {
     public applicationVersion: string;
-    private diagnosticsService: DiagnosticsService;
+    private diagnostics: Observable<Diagnostics>;
 
-    constructor(diagnosticsService: DiagnosticsService) {
-        this.diagnosticsService = diagnosticsService;
-        diagnosticsService.diagnosticsFetched$
-            .subscribe(s => this.applicationVersion = s.applicationVersion)
+    constructor(private store: Store<DiagnosticsState>) {
+        this.diagnostics = this.store.select(getDiagnostics);
     }
 
     ngOnInit() {
-        this.diagnosticsService.fetchDiagnostics();
     }
 
 }

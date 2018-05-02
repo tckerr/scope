@@ -1,5 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {DiagnosticsService} from '../../services/diagnostics.service';
+import {DiagnosticsState} from '../../../state/diagnostics/reducers';
+import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs/Observable';
+import {Diagnostics} from '../../models/diagnostics';
+import {getDiagnostics} from '../../../state/diagnostics/selectors/diagnostics';
 
 @Component({
     selector: 'app-database-status',
@@ -8,19 +12,10 @@ import {DiagnosticsService} from '../../services/diagnostics.service';
 })
 export class DatabaseStatusComponent implements OnInit {
 
-    public databaseOnline: boolean;
-    public databaseStatusKnown = false;
-    private diagnosticsService: DiagnosticsService;
+    private diagnostics: Observable<Diagnostics>;
 
-    constructor(diagnosticsService: DiagnosticsService) {
-        this.diagnosticsService = diagnosticsService;
-        diagnosticsService.diagnosticsFetched$
-            .subscribe(s => this.setStatus(s))
-    }
-
-    private setStatus(s) {
-        this.databaseStatusKnown = true;
-        this.databaseOnline = s.databaseOnline;
+    constructor(private store: Store<DiagnosticsState>) {
+        this.diagnostics = this.store.select(getDiagnostics);
     }
 
     ngOnInit() {

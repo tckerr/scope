@@ -1,14 +1,14 @@
-<ng-container *ngIf="databaseStatusKnown">
-    <i *ngIf="databaseOnline"
+<ng-container *ngIf="(diagnostics | async) as diagnostic">
+    <i *ngIf="diagnostic.databaseOnline"
        class="fa fa-circle-o-notch color-success"
        matTooltip="Services online">
     </i>
-    <i *ngIf="!databaseOnline"
+    <i *ngIf="!diagnostic.databaseOnline"
        class="fa fa-circle-o-notch color-error"
        matTooltip="Services offline">
     </i>
 </ng-container>
-<i *ngIf="!databaseStatusKnown"
-   class="fa fa-circle-o-notch color-unknown"
-   matTooltip="Service status unknown">
-</i>
+<!--<i *ngIf="diagnostics | async as diagnostic"-->
+   <!--class="fa fa-circle-o-notch color-unknown"-->
+   <!--matTooltip="Service status unknown">-->
+<!--</i>-->

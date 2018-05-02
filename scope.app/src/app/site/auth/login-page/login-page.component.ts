@@ -15,8 +15,4 @@ export class LoginPageComponent implements OnInit {
 
     ngOnInit() {
     }
-
-    navigateToProjects() {
-        this.router.navigate(['projects']);
-    }
 }

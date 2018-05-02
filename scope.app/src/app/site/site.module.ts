@@ -15,7 +15,7 @@ import {IsAuthenticatedGuard} from '../auth/guards/is-authenticated.guard';
 import {IsAnonymousGuard} from '../auth/guards/is-anonymous.guard';
 import {RegisterFormComponent} from '../auth/components/register-form/register-form.component';
 import {UserMenuComponent} from './navigation/user-menu/user-menu.component';
-import {DiagnosticsService} from '../diagnostics/services/diagnostics.service';
+import {DiagnosticsApi} from '../diagnostics/services/diagnostics-api.service';
 import {StateModule} from '../state/state.module';
 
 const routes: Routes = [
@@ -61,8 +61,7 @@ const routes: Routes = [
     ],
     providers: [
         IsAuthenticatedGuard,
-        IsAnonymousGuard,
-        DiagnosticsService
+        IsAnonymousGuard
     ],
     bootstrap: [RootComponent]
 })
