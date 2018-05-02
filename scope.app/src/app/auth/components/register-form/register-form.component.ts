@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {usernameAvailability} from './validators/username-availability-validator.directive';
+import {usernameAvailability} from './validators/username-availability-validator';
 import {AuthApi} from '../../services/auth-api.service';
 import {AuthState, getAuthState} from '../../../state/auth/reducers';
 import {Store} from '@ngrx/store';
 import {RegisterUser} from '../../../state/auth/actions/auth';
 import {Observable} from 'rxjs/Observable';
 import {HttpErrorResponse} from '@angular/common/http';
+import {passwordComparisonValidator} from './validators/password-comparison-validator';
 
 @Component({
     selector: 'app-register-form',
@@ -52,8 +53,11 @@ export class RegisterFormComponent implements OnInit {
         this.registerForm = this.formBuilder.group({
             username: ['', Validators.required, usernameAvailability(this.authApi)],
             password: ['', [Validators.required, Validators.maxLength(150)]],
+            passwordRepeat: ['', [Validators.required, Validators.maxLength(150)]],
             email: ['', [Validators.required, Validators.email]]
-        })
+        }, {
+            validator: passwordComparisonValidator('password', 'passwordRepeat')
+        });
     }
 
     public hasFieldErrors(fieldName: string, errorType: string) {
@@ -66,6 +70,10 @@ export class RegisterFormComponent implements OnInit {
         if (form.invalid) {
             throw new Error('Cannot submit an invalid form')
         }
-        this.store.dispatch(new RegisterUser(form.getRawValue()))
+        this.store.dispatch(new RegisterUser({
+            username: form.get('username').value,
+            password: form.get('password').value,
+            email: form.get('email').value
+        }))
     }
 }
