@@ -6,7 +6,7 @@ import {
     GENERATE_TOKEN_SUCCESS,
     REGISTER_USER,
     REGISTER_USER_FAILURE,
-    REGISTER_USER_SUCCESS
+    REGISTER_USER_SUCCESS, RESUME_SESSION, ResumeSession
 } from '../actions/auth';
 import {HttpErrorResponse} from '@angular/common/http';
 
@@ -62,6 +62,11 @@ export function reducer(state: State = defaultState, action: AuthAction) {
                     isGeneratingToken: false,
                     errorResponse: null
                 }
+            };
+        case RESUME_SESSION:
+            return {
+                ...state,
+                token: action.payload.token
             };
         case REGISTER_USER:
             return {

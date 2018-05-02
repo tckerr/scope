@@ -4,6 +4,7 @@ import {AuthApi} from './services/auth-api.service';
 import {SharedModule} from '../shared/shared.module';
 import {CookieModule} from 'ngx-cookie';
 import {RegisterFormComponent} from './components/register-form/register-form.component';
+import {TokenStorageService} from './services/token-storage.service';
 
 @NgModule({
     imports: [
@@ -11,7 +12,8 @@ import {RegisterFormComponent} from './components/register-form/register-form.co
         CookieModule.forChild()
     ],
     providers: [
-        AuthApi
+        AuthApi,
+        TokenStorageService
     ],
     exports: [
         LoginFormComponent,

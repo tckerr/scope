@@ -14,11 +14,12 @@ import {
     REGISTER_USER_SUCCESS,
     RegisterUser,
     RegisterUserFailure,
-    RegisterUserSuccess
+    RegisterUserSuccess, RESUME_SESSION, ResumeSession
 } from '../actions/auth';
 import {AuthApi} from '../../../auth/services/auth-api.service';
 import {of} from 'rxjs/observable/of';
 import * as RouterActions from './../../router/actions/router';
+import {TokenStorageService} from '../../../auth/services/token-storage.service';
 
 @Injectable()
 export class AuthEffects {
@@ -44,15 +45,20 @@ export class AuthEffects {
         );
 
     @Effect()
-    redirectAfterLogout: Observable<Action> = this.actions
+    clearTokenAndRedirectAfterLogout: Observable<Action> = this.actions
         .ofType<GenerateToken>(CLEAR_TOKEN)
-        .pipe(
-            switchMap(() => of(new RouterActions.Go({path: ['/login']}))),
-        );
+        .do(action => this.tokenStorage.clearToken())
+        .switchMap(() => of(new RouterActions.Go({path: ['/login']})));
 
     @Effect()
-    redirectToProjectsOnLogin: Observable<Action> = this.actions
+    storeTokenAndRedirectToProjectsOnLogin: Observable<Action> = this.actions
         .ofType<GenerateTokenSuccess>(GENERATE_TOKEN_SUCCESS)
+        .do(action => this.tokenStorage.addToken(action.payload.token))
+        .switchMap(() => of(new RouterActions.Go({path: ['/projects']})));
+
+    @Effect()
+    redirectToProjectsOnResumedSession: Observable<Action> = this.actions
+        .ofType<ResumeSession>(RESUME_SESSION)
         .pipe(
             switchMap(() => of(new RouterActions.Go({path: ['/projects']}))),
         );
@@ -63,6 +69,7 @@ export class AuthEffects {
         .switchMap(() => of(new RouterActions.Go({path: ['/login']})));
 
     constructor(private actions: Actions,
-                private authApi: AuthApi) {
+                private authApi: AuthApi,
+                private tokenStorage: TokenStorageService) {
     }
 }
