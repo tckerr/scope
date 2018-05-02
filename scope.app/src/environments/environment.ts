@@ -6,7 +6,7 @@
 export const environment = {
     production: false,
     settings: {
-        diagnosticFetchIntervalMs: 10000
+        diagnosticFetchIntervalMs: 600000
     },
     api: {
         baseUrl: 'http://localhost:8000/api'

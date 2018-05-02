@@ -40,17 +40,10 @@ export class RegisterFormComponent implements OnInit {
             .select(getAuthState)
             .map(state => state.auth.registration.errorResponse)
             .do(res => {
-                if (!res) {
-                    return;
-                }
-                Object.keys(res.error).forEach(key => {
-                    const errors = [];
-                    for (let i = 0; i < res.error[key].length; i++) {
-                        const obj = {};
-                        obj[key] = res.error[key][0];
-                        errors.push(obj);
-                    }
-                    this.registerForm.controls[key].setErrors(errors);
+                return res && Object.keys(res.error).forEach(key => {
+                    this.registerForm.controls[key].setErrors({
+                        'server_errors': res.error[key]
+                    });
                 });
             });
     }
