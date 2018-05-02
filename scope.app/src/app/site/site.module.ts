@@ -16,6 +16,7 @@ import {IsAnonymousGuard} from '../auth/guards/is-anonymous.guard';
 import {RegisterFormComponent} from '../auth/components/register-form/register-form.component';
 import {UserMenuComponent} from './navigation/user-menu/user-menu.component';
 import {StateModule} from '../state/state.module';
+import {OrganizationModule} from '../organization/organization.module';
 
 const routes: Routes = [
     {path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -43,6 +44,7 @@ const routes: Routes = [
         SharedModule,
         AuthModule,
         ProjectModule,
+        OrganizationModule,
         DiagnosticsModule,
         CookieModule.forRoot(),
         RouterModule.forRoot(routes, {enableTracing: false}),
