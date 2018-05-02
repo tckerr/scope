@@ -10,10 +10,12 @@ import {CustomSerializer} from './shared/utils';
 import * as fromProjects from './projects/reducers';
 import * as fromAuth from './auth/reducers';
 import * as fromDiagnostics from './diagnostics/reducers';
+import * as fromOrgs from './organizations/reducers';
 import {AuthEffects} from './auth/effects/auth';
 import {ProjectsEffects} from './projects/effects/projects';
 import {RouterEffects} from './router/effects/router';
 import {DiagnosticsEffects} from './diagnostics/effects/diagnostics';
+import {OrganizationsEffects} from './organizations/effects/organizations';
 
 @NgModule({
     imports: [
@@ -22,12 +24,14 @@ import {DiagnosticsEffects} from './diagnostics/effects/diagnostics';
             metaReducers: appMetaReducers
         }),
         StoreModule.forFeature('projects', fromProjects.reducers),
+        StoreModule.forFeature('organizations', fromOrgs.reducers),
         StoreModule.forFeature('auth', fromAuth.reducers),
         StoreModule.forFeature('diagnostics', fromDiagnostics.reducers),
         StoreRouterConnectingModule.forRoot(),
         EffectsModule.forRoot([AppEffects]),
         EffectsModule.forFeature([RouterEffects]),
         EffectsModule.forFeature([ProjectsEffects]),
+        EffectsModule.forFeature([OrganizationsEffects]),
         EffectsModule.forFeature([AuthEffects]),
         EffectsModule.forFeature([DiagnosticsEffects]),
         StoreDevtoolsModule.instrument()

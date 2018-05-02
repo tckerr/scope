@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Organization} from '../../state/organizations/models/organization';
 import {Observable} from 'rxjs/Observable';
 import {environment} from '../../../environments/environment';
@@ -10,7 +10,7 @@ import {Store} from '@ngrx/store';
 @Injectable()
 export class OrganizationsApi extends AuthenticatedApi {
 
-  constructor(private httpClient: HttpClient, store: Store<AuthState>) {
+    constructor(private httpClient: HttpClient, store: Store<AuthState>) {
         super(store);
     }
 
