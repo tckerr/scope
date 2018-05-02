@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthState, getIsAuthenticated} from '../../../state/auth/reducers';
+import {AuthState} from '../../../state/auth/reducers';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
-import {ClearToken} from '../../../state/auth/actions/auth';
+import {ClearToken} from '../../../state/auth/actions/clear-token';
+import {getIsAuthenticated} from '../../../state/auth/selectors/get-is-authenticated';
 
 @Component({
     selector: 'app-user-menu',

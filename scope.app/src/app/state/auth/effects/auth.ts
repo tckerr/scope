@@ -4,28 +4,26 @@ import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import {catchError, map, switchMap} from 'rxjs/operators';
 import {
-    CLEAR_TOKEN,
-    GENERATE_TOKEN,
-    GENERATE_TOKEN_SUCCESS,
-    GenerateToken,
-    GenerateTokenFailure,
-    GenerateTokenSuccess,
-    REGISTER_USER,
-    REGISTER_USER_SUCCESS,
-    RegisterUser,
-    RegisterUserFailure,
-    RegisterUserSuccess, RESUME_SESSION, ResumeSession
-} from '../actions/auth';
+    RegisterUserFailure} from '../actions/register-user-failure';
 import {AuthApi} from '../../../auth/services/auth-api.service';
 import {of} from 'rxjs/observable/of';
 import * as RouterActions from './../../router/actions/router';
 import {TokenStorageService} from '../../../auth/services/token-storage.service';
+import {
+    GENERATE_TOKEN,
+    GenerateToken} from '../actions/generate-token';
+import {GENERATE_TOKEN_SUCCESS, GenerateTokenSuccess} from '../actions/generate-token-success';
+import {GenerateTokenFailure} from '../actions/generate-token-failure';
+import {CLEAR_TOKEN} from '../actions/clear-token';
+import {RESUME_SESSION, ResumeSession} from '../actions/resume-session';
+import {REGISTER_USER, RegisterUser} from '../actions/register-user';
+import {REGISTER_USER_SUCCESS, RegisterUserSuccess} from '../actions/register-user-success';
 
 @Injectable()
 export class AuthEffects {
 
     @Effect()
-    loadProjects: Observable<Action> = this.actions
+    generateToken: Observable<Action> = this.actions
         .ofType<GenerateToken>(GENERATE_TOKEN)
         .pipe(
             switchMap((action) => this.authApi.fetchToken(action.payload).pipe(
@@ -45,9 +43,9 @@ export class AuthEffects {
         );
 
     @Effect()
-    clearTokenAndRedirectAfterLogout: Observable<Action> = this.actions
+    clearTokenAndRedirectOnLogout: Observable<Action> = this.actions
         .ofType<GenerateToken>(CLEAR_TOKEN)
-        .do(action => this.tokenStorage.clearToken())
+        .do(() => this.tokenStorage.clearToken())
         .switchMap(() => of(new RouterActions.Go({path: ['/login']})));
 
     @Effect()

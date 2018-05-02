@@ -1,11 +1,13 @@
 import {Injectable} from '@angular/core';
 import {HttpHeaders} from '@angular/common/http';
-import {AuthState, getAuthToken, getIsAuthenticated} from '../../state/auth/reducers';
+import {AuthState} from '../../state/auth/reducers';
 import {Store} from '@ngrx/store';
 import {NotAuthenticatedError} from '../../auth/errors/not-authenticated-error';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/take';
+import {getAuthToken} from '../../state/auth/selectors/get-auth-token';
+import {getIsAuthenticated} from '../../state/auth/selectors/get-is-authenticated';
 
 @Injectable()
 export class AuthenticatedApi {

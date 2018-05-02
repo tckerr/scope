@@ -3,8 +3,9 @@ import {Actions, Effect} from '@ngrx/effects';
 import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import {map, switchMap} from 'rxjs/operators';
-import {LOAD_DIAGNOSTICS, LoadDiagnostics, LoadDiagnosticsSuccess} from '../actions/diagnostics';
+import {LoadDiagnosticsSuccess} from '../actions/load-diagnostics-success';
 import {DiagnosticsApi} from '../../../diagnostics/services/diagnostics-api.service';
+import {LOAD_DIAGNOSTICS, LoadDiagnostics} from '../actions/load-diagnostics';
 
 @Injectable()
 export class DiagnosticsEffects {

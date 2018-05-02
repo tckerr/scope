@@ -1,12 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {environment} from '../../../environments/environment';
-import {LoadDiagnostics} from '../../state/diagnostics/actions/diagnostics';
+import {LoadDiagnostics} from '../../state/diagnostics/actions/load-diagnostics';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../state/app-state';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import {TokenStorageService} from '../../auth/services/token-storage.service';
-import {ResumeSession} from '../../state/auth/actions/auth';
+import {ResumeSession} from '../../state/auth/actions/resume-session';
 
 @Component({
     selector: 'app-root',

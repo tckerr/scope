@@ -1,15 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {
-    AuthState,
+    AuthState} from '../../../state/auth/reducers';
+import {Store} from '@ngrx/store';
+import {GenerateToken} from '../../../state/auth/actions/generate-token';
+import {NgForm} from '@angular/forms';
+import {
     getAuthLoginGeneralErrors,
     getAuthLoginPasswordErrors,
-    getAuthLoginUsernameErrors,
-    getIsGeneratingToken
-} from '../../../state/auth/reducers';
-import {Store} from '@ngrx/store';
-import {GenerateToken} from '../../../state/auth/actions/auth';
-import {NgForm} from '@angular/forms';
+    getAuthLoginUsernameErrors
+} from '../../../state/auth/selectors/get-auth-state-login-errors';
+import {getIsGeneratingToken} from '../../../state/auth/selectors/get-is-generating-token';
 
 @Component({
     selector: 'app-login-form',

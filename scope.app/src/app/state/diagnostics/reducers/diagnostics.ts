@@ -1,5 +1,6 @@
 import {Diagnostics} from '../../../diagnostics/models/diagnostics';
-import {DiagnosticsAction, LOAD_DIAGNOSTICS_SUCCESS} from '../actions/diagnostics';
+import {DiagnosticsAction} from '../actions/diagnostics-action';
+import {LOAD_DIAGNOSTICS_SUCCESS} from '../actions/load-diagnostics-success';
 
 export interface State {
     diagnostics: Diagnostics;

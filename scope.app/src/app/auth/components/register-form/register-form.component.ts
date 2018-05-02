@@ -2,12 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {usernameAvailability} from './validators/username-availability-validator';
 import {AuthApi} from '../../services/auth-api.service';
-import {AuthState, getAuthState} from '../../../state/auth/reducers';
+import {AuthState} from '../../../state/auth/reducers';
 import {Store} from '@ngrx/store';
-import {RegisterUser} from '../../../state/auth/actions/auth';
+import {RegisterUser} from '../../../state/auth/actions/register-user';
 import {Observable} from 'rxjs/Observable';
 import {HttpErrorResponse} from '@angular/common/http';
 import {passwordComparisonValidator} from './validators/password-comparison-validator';
+import {getAuthState} from '../../../state/auth/selectors/get-auth-state';
 
 @Component({
     selector: 'app-register-form',

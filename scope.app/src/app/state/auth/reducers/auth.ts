@@ -1,14 +1,14 @@
 import {
-    AuthAction,
-    CLEAR_TOKEN,
-    GENERATE_TOKEN,
-    GENERATE_TOKEN_FAILURE,
-    GENERATE_TOKEN_SUCCESS,
-    REGISTER_USER,
-    REGISTER_USER_FAILURE,
-    REGISTER_USER_SUCCESS, RESUME_SESSION, ResumeSession
-} from '../actions/auth';
+    AuthAction} from '../actions/auth-action';
 import {HttpErrorResponse} from '@angular/common/http';
+import {GENERATE_TOKEN} from '../actions/generate-token';
+import {GENERATE_TOKEN_SUCCESS} from '../actions/generate-token-success';
+import {GENERATE_TOKEN_FAILURE} from '../actions/generate-token-failure';
+import {CLEAR_TOKEN} from '../actions/clear-token';
+import {RESUME_SESSION} from '../actions/resume-session';
+import {REGISTER_USER} from '../actions/register-user';
+import {REGISTER_USER_SUCCESS} from '../actions/register-user-success';
+import {REGISTER_USER_FAILURE} from '../actions/register-user-failure';
 
 export interface State {
     token: string;
