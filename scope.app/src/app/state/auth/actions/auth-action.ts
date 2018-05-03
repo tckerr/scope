@@ -1,7 +1,7 @@
 import {GenerateToken} from './generate-token';
 import {GenerateTokenSuccess} from './generate-token-success';
 import {GenerateTokenFailure} from './generate-token-failure';
-import {ClearToken} from './clear-token';
+import {Logout} from './logout';
 import {ResumeSession} from './resume-session';
 import {RegisterUser} from './register-user';
 import {RegisterUserSuccess} from './register-user-success';
@@ -12,7 +12,7 @@ export type AuthAction =
     | GenerateTokenSuccess
     | GenerateTokenFailure
     | ResumeSession
-    | ClearToken
+    | Logout
     | RegisterUser
     | RegisterUserSuccess
     | RegisterUserFailure;

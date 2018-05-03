@@ -14,10 +14,13 @@ import {
     GenerateToken} from '../actions/generate-token';
 import {GENERATE_TOKEN_SUCCESS, GenerateTokenSuccess} from '../actions/generate-token-success';
 import {GenerateTokenFailure} from '../actions/generate-token-failure';
-import {CLEAR_TOKEN} from '../actions/clear-token';
+import {LOGOUT, Logout} from '../actions/logout';
 import {RESUME_SESSION, ResumeSession} from '../actions/resume-session';
 import {REGISTER_USER, RegisterUser} from '../actions/register-user';
 import {REGISTER_USER_SUCCESS, RegisterUserSuccess} from '../actions/register-user-success';
+import {ClearOrganizationsData} from '../../organizations/actions/clear-data';
+import 'rxjs/add/operator/concat';
+import {ClearProjectsData} from '../../projects/actions/clear-projects-data';
 
 @Injectable()
 export class AuthEffects {
@@ -44,27 +47,35 @@ export class AuthEffects {
 
     @Effect()
     clearTokenAndRedirectOnLogout: Observable<Action> = this.actions
-        .ofType<GenerateToken>(CLEAR_TOKEN)
+        .ofType<Logout>(LOGOUT)
         .do(() => this.tokenStorage.clearToken())
-        .switchMap(() => of(new RouterActions.Go({path: ['/login']})));
+        .pipe(
+            switchMap(() => [
+                new ClearOrganizationsData(),
+                new ClearProjectsData(),
+                new RouterActions.Go({path: ['/login']})
+            ])
+        );
 
     @Effect()
     storeTokenAndRedirectToProjectsOnLogin: Observable<Action> = this.actions
         .ofType<GenerateTokenSuccess>(GENERATE_TOKEN_SUCCESS)
         .do(action => this.tokenStorage.addToken(action.payload.token))
-        .switchMap(() => of(new RouterActions.Go({path: ['/projects']})));
+        .switchMap(() => [new RouterActions.Go({path: ['/projects']})]);
 
     @Effect()
     redirectToProjectsOnResumedSession: Observable<Action> = this.actions
         .ofType<ResumeSession>(RESUME_SESSION)
-        .pipe(
-            switchMap(() => of(new RouterActions.Go({path: ['/projects']}))),
-        );
+        .pipe(switchMap(() => [new RouterActions.Go({path: ['/projects']})]));
 
     @Effect()
     redirectToLoginOnRegister: Observable<Action> = this.actions
         .ofType<RegisterUserSuccess>(REGISTER_USER_SUCCESS)
-        .switchMap(() => of(new RouterActions.Go({path: ['/login']})));
+        .pipe(
+            switchMap(() => [
+                new RouterActions.Go({path: ['/login']})
+            ])
+        );
 
     constructor(private actions: Actions,
                 private authApi: AuthApi,

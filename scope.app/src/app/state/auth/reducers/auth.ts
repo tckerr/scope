@@ -4,7 +4,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {GENERATE_TOKEN} from '../actions/generate-token';
 import {GENERATE_TOKEN_SUCCESS} from '../actions/generate-token-success';
 import {GENERATE_TOKEN_FAILURE} from '../actions/generate-token-failure';
-import {CLEAR_TOKEN} from '../actions/clear-token';
+import {LOGOUT} from '../actions/logout';
 import {RESUME_SESSION} from '../actions/resume-session';
 import {REGISTER_USER} from '../actions/register-user';
 import {REGISTER_USER_SUCCESS} from '../actions/register-user-success';
@@ -44,8 +44,8 @@ export function reducer(state: State = defaultState, action: AuthAction) {
                     isGeneratingToken: true
                 }
             };
-        case CLEAR_TOKEN:
-            return {...state, token: null};
+        case LOGOUT:
+            return defaultState;
         case GENERATE_TOKEN_FAILURE:
             return {
                 ...state,

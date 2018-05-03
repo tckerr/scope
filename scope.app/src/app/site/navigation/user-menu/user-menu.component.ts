@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthState} from '../../../state/auth/reducers';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
-import {ClearToken} from '../../../state/auth/actions/clear-token';
+import {Logout} from '../../../state/auth/actions/logout';
 import {getIsAuthenticated} from '../../../state/auth/selectors/get-is-authenticated';
 
 @Component({
@@ -21,6 +21,6 @@ export class UserMenuComponent implements OnInit {
     }
 
     logout() {
-        this.store.dispatch(new ClearToken());
+        this.store.dispatch(new Logout());
     }
 }

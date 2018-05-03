@@ -13,10 +13,10 @@ export class OrganizationsDebugComponent implements OnInit {
     private orgs: Store<Organization[]>;
 
     constructor(private store: Store<OrgState>) {
-        this.orgs = this.store.select(getAllOrgs);
     }
 
     ngOnInit() {
+        this.orgs = this.store.select(getAllOrgs);
         this.store.dispatch(new LoadOrganizations());
     }
 
