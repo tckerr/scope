@@ -3,22 +3,33 @@ import {createFeatureSelector, createSelector} from '@ngrx/store';
 import {AppState} from '../../app-state';
 
 export interface OrgState {
-    projects: fromOrg.State;
+    organizations: fromOrg.State;
 }
 
 export interface State extends AppState {
-    projects: OrgState
+    organizations: OrgState
 }
 
 export const reducers = {
-    projects: fromOrg.reducer
+    organizations: fromOrg.reducer
 };
 
 export const getOrganizationsState = createFeatureSelector<OrgState>('organizations');
 
 export const getOrganizationsEntityState = createSelector(
     getOrganizationsState,
-    (state) => state.projects
+    (state) => state.organizations
+);
+
+export const getActiveOrganizationId = createSelector(
+    getOrganizationsEntityState,
+    state => state.activeOrganizationId
+);
+
+export const getActiveOrganization = createSelector(
+    getOrganizationsState,
+    getActiveOrganizationId,
+    (state, activeId) => state.organizations.entities[activeId]
 );
 
 export const {

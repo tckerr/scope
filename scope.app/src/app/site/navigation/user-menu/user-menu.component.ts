@@ -11,13 +11,11 @@ import {getIsAuthenticated} from '../../../state/auth/selectors/get-is-authentic
     styleUrls: ['./user-menu.component.css']
 })
 export class UserMenuComponent implements OnInit {
-    private isAuthenticated: Observable<boolean>;
 
     constructor(private store: Store<AuthState>) {
     }
 
     ngOnInit() {
-        this.isAuthenticated = this.store.select(getIsAuthenticated);
     }
 
     logout() {

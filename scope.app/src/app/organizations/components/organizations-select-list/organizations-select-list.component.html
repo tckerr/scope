@@ -1,0 +1,7 @@
+<button mat-button
+        [matMenuTriggerFor]="menu">{{activeOrganization?.name || 'Select an organization'}}</button>
+<mat-menu #menu="matMenu">
+    <button mat-menu-item *ngFor="let org of organizations" (click)="selectOrganization(org)">
+        <span>{{org.name}}</span>
+    </button>
+</mat-menu>
